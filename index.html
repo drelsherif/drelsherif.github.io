@@ -669,7 +669,8 @@
       </div>
 
       <div class="actions" aria-label="Primary actions">  
-        <a class="btn primary" id="latestLink" href="Mar2026/export_web/index.html#/preview">Read Latest Issue</a>  
+        <!-- Changed this href -->  
+        <a class="btn primary" id="latestLink" href="Mar2026.html">Read Latest Issue</a>  
         <a class="btn" href="editorial-standards.html">Editorial Standards</a>  
         <a class="btn" href="mailto:yelsherif@northwell.edu?subject=Neurology%20AI%20Pulse%20-%20Suggestions%20and%20Comments">Contact Us</a>  
       </div>  
@@ -678,8 +679,8 @@
     <div class="section-rule">  
       <div class="section-rule-line"></div>  
       <div class="section-rule-label">Issues</div>  
-      <!-- Add a span here to display the issue count -->  
-      <span class="section-rule-count" id="issueCount" style="display:none;">0 Issues</span>  
+      <!-- Added an ID for the issue count here -->  
+      <div class="section-rule-count" id="issueCount" style="display:none;">0 Issues</div>  
       <div class="section-rule-line"></div>  
     </div>
 
@@ -754,10 +755,10 @@
   /*  
     ISSUE AUTO-DETECTION  
     Looks for:  
-      {Mon}{YYYY}/export_web/index.html (now relative to this index.html)
+      {Mon}{YYYY}.html
 
     OPTIONAL HIGHLIGHTS FILE  
-      {Mon}{YYYY}/issue.json  
+      {Mon}{YYYY}.json  
   */
 
   const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];  
@@ -767,19 +768,18 @@
   const LAUNCH_YEAR   = 2026;  
   const LAUNCH_MONTH  = 2; // March is month 2 (0-indexed)
 
-  // MODIFIED PATH FUNCTIONS  
+  // --- MODIFIED PATH FUNCTIONS ---  
   function issueIndexPath(year, monthIdx) {  
-    // Removed 'Issues/' prefix  
-    return `${MONTHS[monthIdx]}${year}/export_web/index.html#/preview`;  
+    return `${MONTHS[monthIdx]}${year}.html`; // Direct HTML file  
   }  
   function issueHeadPath(year, monthIdx) {  
-    // Removed 'Issues/' prefix  
-    return `${MONTHS[monthIdx]}${year}/export_web/index.html`;  
+    return `${MONTHS[monthIdx]}${year}.html`; // Direct HTML file  
   }  
   function issueMetaPath(year, monthIdx) {  
-    // Removed 'Issues/' prefix  
-    return `${MONTHS[monthIdx]}${year}/issue.json`;  
+    return `${MONTHS[monthIdx]}${year}.json`; // JSON file for highlights  
   }  
+  // --- END MODIFIED PATH FUNCTIONS ---
+
   function issueName(year, monthIdx) {  
     return `${MONTH_FULL[monthIdx]} ${year}`;  
   }
@@ -832,7 +832,8 @@
 
       return { spotlight, governance, spotlightUrl, governanceUrl };  
     } catch (e) {  
-      return null;  
+      // console.warn(`Could not load highlights for ${url}:`, e); // For debugging  
+      return null; // Return null if fetching or parsing fails  
     }  
   }
 
@@ -842,9 +843,6 @@
     const grid = document.getElementById('issuesGrid');  
     const months = monthsToCheck();
 
-    // Changed this line to ensure the "Read Latest Issue" button's href is correct on page load  
-    document.getElementById('latestLink').href = issueIndexPath(LAUNCH_YEAR, LAUNCH_MONTH);
-
     const checks = await Promise.all(  
       months.map(async ({ year, month }, i) => {  
         const exists = await headOk(issueHeadPath(year, month));  
@@ -852,9 +850,8 @@
       })  
     );
 
-
     const available = checks.filter(x => x.exists);  
-    grid.innerHTML = '';
+    grid.innerHTML = ''; // Clear skeleton loader
 
     // Update count badge  
     const countEl = document.getElementById('issueCount');  
@@ -890,26 +887,26 @@
       latestBtn.setAttribute('aria-label', `Read latest issue — ${issueName(latest.year, latest.month)}`);  
     }
 
-
     for (const item of available) {  
       const { year, month, issueNumber } = item;
 
       const href = issueIndexPath(year, month);  
       const meta = await fetchHighlights(issueMetaPath(year, month));
 
+      // Use default text if highlights are not found or fetch fails  
       const spotlight   = meta?.spotlight   || "Clinical innovation and practical workflows curated for neurologic practice.";  
       const governance    = meta?.governance    || "Governance, privacy, and accountability developments shaping clinical AI adoption.";  
-      const spotlightUrl  = meta?.spotlightUrl  || '';  
-      const governanceUrl = meta?.governanceUrl || '';
+      const spotlightUrl  = meta?.spotlightUrl  || href; // Default to main issue link if no specific URL  
+      const governanceUrl = meta?.governanceUrl || href; // Default to main issue link if no specific URL
 
 
       // Build highlight rows — clickable to the article URL when present  
       const hlRow = (label, text, url) => {  
-        // Ensure label is properly escaped and formatted for display  
         const displayLabel = `<span class="hl-label">${escapeHtml(label)}</span>`;  
         const inner = `${displayLabel}<span>${escapeHtml(text)}</span>`;  
         if (url) {  
-          return `<a class="hl-row hl-link" href="${escapeHtml(url)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${inner}</a>`;  
+          // Changed target to _self so it opens in the same window (user can middle-click for new tab)  
+          return `<a class="hl-row hl-link" href="${escapeHtml(url)}" target="_self" rel="noopener" onclick="event.stopPropagation()">${inner}</a>`;  
         }  
         return `<div class="hl-row">${inner}</div>`;  
       };
