@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Neurology AI Pulse | Editorial Standards</title>
+<meta name="description" content="Editorial standards for Neurology AI Pulse: scope, sourcing, governance, conflict of interest, safety, and correction policy." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://pulse.globalai-medicine.org/editorial-standards.html" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Neurology AI Pulse — Editorial Standards" />
+<meta property="og:description" content="Scope, sourcing, AI use policy, independence, and corrections policy for Neurology AI Pulse." />
+<meta property="og:url" content="https://pulse.globalai-medicine.org/editorial-standards.html" />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy:    #03080F;
+    --blue:    #003087;
+    --mid:     #0057A8;
+    --sky:     #009CDE;
+    --teal:    #00B5CC;
+    --glow:    #00E5FF;
+    --border:  rgba(0,156,222,0.18);
+    --border2: rgba(255,255,255,0.10);
+    --muted:   rgba(255,255,255,0.40);
+    --text:    rgba(255,255,255,0.66);
+  }
+
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+
+  body {
+    background: var(--navy);
+    color: #fff;
+    font-family: 'DM Sans', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Atmospheric background */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,87,168,0.22) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 80% 60%,  rgba(0,156,222,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 40% at 10% 80%,  rgba(0,181,204,0.06) 0%, transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,156,222,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,156,222,0.04) 1px, transparent 1px);
+    background-size: 52px 52px;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* Top accent bar — same as index */
+  .constellation-bar {
+    height: 3px;
+    background: linear-gradient(90deg,
+      #003087 0%, #0057A8 14%, #009CDE 28%, #00B5CC 40%,
+      #00A651 52%, #7B2D8B 66%, #F47920 80%, #009CDE 100%);
+    position: relative; z-index: 10;
+  }
+
+  /* Page wrapper */
+  .wrap {
+    position: relative; z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+    animation: fadeUp 0.65s ease both;
+  }
+
+  /* ── Header ── */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+  }
+
+  .brand-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s;
+  }
+  .brand-link:hover { opacity: 0.82; }
+
+  /* Inline SVG logo — matches index */
+  .brand-logo { flex-shrink: 0; }
+
+  .brand-text {}
+  .brand-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.22rem;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #fff;
+  }
+  .brand-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.50rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  .nav {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 16px;
+    border-radius: 999px;
+    background: rgba(0,156,222,0.10);
+    border: 1px solid rgba(0,156,222,0.35);
+    color: var(--sky);
+    text-decoration: none;
+    font-size: 0.60rem;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+  .btn:hover {
+    background: rgba(0,156,222,0.20);
+    border-color: var(--sky);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+  .btn.primary {
+    background: rgba(0,229,255,0.10);
+    border-color: rgba(0,229,255,0.40);
+    color: #fff;
+  }
+  .btn.primary:hover {
+    background: rgba(0,229,255,0.18);
+    border-color: var(--glow);
+  }
+
+  /* ── Main card ── */
+  .card {
+    background: rgba(0,87,168,0.08);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 34px 32px 28px;
+  }
+
+  /* Page title */
+  .page-kicker {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--sky);
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    font-size: 2.0rem;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+  .lede {
+    color: rgba(255,255,255,0.60);
+    font-size: 0.90rem;
+    line-height: 1.80;
+    max-width: 780px;
+  }
+
+  /* Principle pills */
+  .pillrow {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+  .pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.50rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 7px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border2);
+    background: rgba(0,48,135,0.12);
+    color: rgba(255,255,255,0.68);
+  }
+
+  /* ── Sections ── */
+  .section {
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .kicker {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.50rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--sky);
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-size: 0.96rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  p, li {
+    color: var(--text);
+    font-size: 0.86rem;
+    line-height: 1.85;
+  }
+  ul {
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  /* Medical disclaimer note */
+  .note {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(0,229,255,0.18);
+    background: rgba(0,156,222,0.06);
+    font-size: 0.84rem;
+    color: rgba(255,255,255,0.60);
+    line-height: 1.75;
+  }
+  .note strong { color: rgba(255,255,255,0.88); font-weight: 700; }
+
+  /* Editors section */
+  .editors-row {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+  .editor { display: flex; flex-direction: column; gap: 2px; }
+  .editor-name {
+    font-size: 0.80rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.82);
+  }
+  .editor-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.48rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.32);
+  }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .footer-left {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.54rem;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.26);
+    line-height: 1.75;
+  }
+  .footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+  .footer-contact-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.50rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.28);
+  }
+
+  /* Animation */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .card { padding: 24px 18px 22px; }
+    h1 { font-size: 1.65rem; }
+    .header { flex-direction: column; align-items: flex-start; }
+    .nav { width: 100%; }
+    .footer { flex-direction: column; align-items: flex-start; }
+    .footer-right { align-items: flex-start; }
+  }
+</style>
+</head>
+
+<body>
+  <div class="constellation-bar"></div>
+
+  <div class="wrap">
+
+    <!-- ── Header ── -->
+    <header class="header">
+
+      <!-- Brand / back to home -->
+      <a class="brand-link" href="/" aria-label="Neurology AI Pulse — back to home">
+        <div class="brand-logo" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="es-halo" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#009CDE" stop-opacity="0.2"/>
+                <stop offset="100%" stop-color="#003087" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="es-core" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#00E5FF"/>
+                <stop offset="60%" stop-color="#009CDE"/>
+                <stop offset="100%" stop-color="#0057A8"/>
+              </radialGradient>
+              <filter id="es-glow">
+                <feGaussianBlur stdDeviation="1.6" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <circle cx="32" cy="32" r="30" fill="url(#es-halo)"/>
+            <circle cx="32" cy="32" r="28" stroke="#009CDE" stroke-width="0.5" stroke-opacity="0.2"/>
+            <path d="M24 20 L17 11 L11 11" stroke="#0057A8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.75"/>
+            <circle cx="11" cy="11" r="2.2" fill="#009CDE" opacity="0.7"/>
+            <path d="M38 20 L45 11 L51 13" stroke="#0057A8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.75"/>
+            <circle cx="51" cy="13" r="2.2" fill="#00B5CC" opacity="0.7"/>
+            <path d="M43 30 L52 26 L58 19" stroke="#0057A8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.7"/>
+            <circle cx="58" cy="19" r="1.8" fill="#009CDE" opacity="0.55"/>
+            <path d="M39 44 L47 51 L53 53" stroke="#0057A8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.7"/>
+            <circle cx="53" cy="53" r="2" fill="#00A651" opacity="0.65"/>
+            <path d="M31 46 L29 55 L23 59" stroke="#0057A8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.65"/>
+            <circle cx="23" cy="59" r="1.8" fill="#7B2D8B" opacity="0.55"/>
+            <path d="M21 32 L5 32" stroke="#0057A8" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.75"/>
+            <path d="M5 32 L1 27 M5 32 L1 37" stroke="#0057A8" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.55"/>
+            <circle cx="32" cy="32" r="13.5" fill="#060D1E" stroke="#009CDE" stroke-width="1.3"/>
+            <circle cx="32" cy="32" r="10" fill="#0A1628" stroke="#0057A8" stroke-width="0.6" opacity="0.8"/>
+            <path d="M8 32 L18 32 L21 32 L23 26 L25.5 38 L28 23 L30 41 L32 27.5 L34 36 L36 30.5 L38.5 32 L41 32 L56 32"
+              stroke="#009CDE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.2"/>
+            <path d="M8 32 L18 32 L21 32 L23 26 L25.5 38 L28 23 L30 41 L32 27.5 L34 36 L36 30.5 L38.5 32 L41 32 L56 32"
+              stroke="#00E5FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#es-glow)" opacity="0.7"/>
+            <circle cx="32" cy="32" r="3.5" fill="url(#es-core)" filter="url(#es-glow)"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-name">Neurology AI Pulse</div>
+          <div class="brand-sub">Clinical AI · Governance · Practical Insight</div>
+        </div>
+      </a>
+
+      <!-- Nav -->
+      <nav class="nav" aria-label="Page navigation">
+        <a class="btn" href="/">← Back to Archive</a>
+        <a class="btn primary" href="mailto:yelsherif@northwell.edu?subject=Neurology%20AI%20Pulse%20-%20Suggestions%20and%20Comments">Contact</a>
+      </nav>
+
+    </header>
+
+    <!-- ── Main card ── -->
+    <main>
+      <div class="card">
+
+        <div class="page-kicker">Publication Policy</div>
+        <h1>Editorial Standards</h1>
+        <p class="lede">
+          Neurology AI Pulse is a clinician-led monthly digest. Our goal is to provide distilled,
+          high-signal insights that invite deeper reading — while maintaining a governance-first
+          framing that prioritizes safety, privacy, accountability, and emerging cognitive rights.
+        </p>
+
+        <div class="pillrow" aria-label="Core principles">
+          <span class="pill">Accuracy</span>
+          <span class="pill">Transparency</span>
+          <span class="pill">Clinical Relevance</span>
+          <span class="pill">Governance-First</span>
+          <span class="pill">No PHI</span>
+          <span class="pill">Human-Led</span>
+        </div>
+
+        <!-- Scope -->
+        <div class="section">
+          <div class="kicker">Scope</div>
+          <h2>What We Cover</h2>
+          <ul>
+            <li>Neurology-facing AI research and applied clinical workflows.</li>
+            <li>Generative AI in documentation, clinical decision support, and healthcare operations.</li>
+            <li>Governance and legal developments: privacy law, accountability frameworks, policy, and cognitive autonomy rights.</li>
+          </ul>
+        </div>
+
+        <!-- Sourcing -->
+        <div class="section">
+          <div class="kicker">Sourcing</div>
+          <h2>How We Select and Cite Materials</h2>
+          <ul>
+            <li>Primary preference: peer-reviewed journals, official guidance documents, reputable legal scholarship, and authoritative policy sources.</li>
+            <li>Each featured item links directly to the original source. Quotes are kept short and context-preserving.</li>
+            <li>We avoid sensationalism — selection is based on clinical relevance and governance significance, not novelty alone.</li>
+          </ul>
+        </div>
+
+        <!-- AI use policy -->
+        <div class="section">
+          <div class="kicker">AI Use Policy</div>
+          <h2>Use of AI Tools in Drafting</h2>
+          <ul>
+            <li>AI may assist with language tightening and structural clarity, but final editorial judgment remains human-led.</li>
+            <li>We reduce hallucination risk by anchoring all summaries to source content and linking directly to originals.</li>
+            <li>No patient-identifiable information (PHI) is published. Any clinical vignettes are de-identified and for educational purposes only.</li>
+          </ul>
+        </div>
+
+        <!-- Conflicts & independence -->
+        <div class="section">
+          <div class="kicker">Conflicts &amp; Independence</div>
+          <h2>Disclosure and Editorial Independence</h2>
+          <ul>
+            <li>No sponsorship influences content selection or editorial tone.</li>
+            <li>Any material relationships relevant to a specific item will be disclosed within that issue.</li>
+          </ul>
+        </div>
+
+        <!-- Corrections -->
+        <div class="section">
+          <div class="kicker">Corrections</div>
+          <h2>Corrections and Updates</h2>
+          <ul>
+            <li>If a factual error is identified, we will correct it and note the correction in a subsequent issue.</li>
+            <li>Where possible, corrected language will also be updated in the hosted version of the affected issue.</li>
+          </ul>
+
+          <div class="note">
+            <strong>Medical Disclaimer:</strong> Neurology AI Pulse is for educational purposes only and does not constitute medical advice.
+            All clinical decisions must be based on professional judgment and primary sources.
+          </div>
+        </div>
+
+        <!-- Editorial team -->
+        <div class="section">
+          <div class="kicker">Editorial Team</div>
+          <h2>Leadership</h2>
+          <div class="editors-row">
+            <div class="editor">
+              <div class="editor-name">Yasir El-Sherif, MD PhD</div>
+              <div class="editor-role">Editor-in-Chief</div>
+            </div>
+            <div class="editor">
+              <div class="editor-name">Jai Shahani, MD</div>
+              <div class="editor-role">Associate Editor</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+          <div class="footer-left">
+            © <span id="yr"></span> Neurology AI Pulse<br>
+            Staten Island University Hospital · Northwell Health<br>
+            Department of Neurology
+          </div>
+          <div class="footer-right">
+            <div class="footer-contact-label">Questions or corrections</div>
+            <a class="btn" href="mailto:yelsherif@northwell.edu?subject=Neurology%20AI%20Pulse%20-%20Suggestions%20and%20Comments">
+              yelsherif@northwell.edu
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /card -->
+    </main>
+
+  </div><!-- /wrap -->
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

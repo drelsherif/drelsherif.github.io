@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Neurology AI Pulse | Archive</title>
+
+<!-- SEO -->
+<meta name="description" content="Neurology AI Pulse is a clinician-led monthly digest delivering distilled neurology AI insights, governance and legal developments, and practical guidance for navigating generative AI in healthcare." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://pulse.globalai-medicine.org/" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Neurology AI Pulse — Clinical AI, Neurology, Governance" />
+<meta property="og:description" content="Distilled neurology AI insights + governance & legal developments, curated for clinicians and healthcare leaders." />
+<meta property="og:url" content="https://pulse.globalai-medicine.org/" />
+<meta property="og:type" content="website" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Neurology AI Pulse" />
+<meta name="twitter:description" content="Clinical AI, neurology, and governance—distilled for real-world practice." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy:    #03080F;
+    --navy2:   #061526;
+    --blue:    #003087;
+    --mid:     #0057A8;
+    --sky:     #009CDE;
+    --teal:    #00B5CC;
+    --glow:    #00E5FF;
+    --green:   #00A651;
+    --muted:   rgba(255,255,255,0.38);
+    --border:  rgba(0,156,222,0.18);
+    --border2: rgba(255,255,255,0.10);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background: var(--navy);
+    color: #fff;
+    font-family: 'DM Sans', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* BACKGROUND ATMOSPHERE */
+  body::before {
+    content:'';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,87,168,0.22) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 80% 60%, rgba(0,156,222,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 40% at 10% 80%, rgba(0,181,204,0.06) 0%, transparent 60%);
+    pointer-events:none;
+    z-index:0;
+  }
+  body::after{
+    content:'';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,156,222,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,156,222,0.04) 1px, transparent 1px);
+    background-size: 52px 52px;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .constellation-bar{
+    height: 3px;
+    background: linear-gradient(90deg,
+      #003087 0%, #0057A8 14%, #009CDE 28%, #00B5CC 40%,
+      #00A651 52%, #7B2D8B 66%, #F47920 80%, #009CDE 100%);
+    position: relative;
+    z-index: 10;
+  }
+
+  .page{
+    position: relative;
+    z-index: 1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-height:100vh;
+    padding: 0 24px 80px;
+  }
+
+  /* HERO */
+  .hero{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding: 62px 24px 34px;
+    max-width: 900px;
+    width: 100%;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .logo-lockup{
+    display:flex;
+    align-items:center;
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+  .logo-mark{
+    flex-shrink:0;
+    animation: glowPulse 3s ease-in-out infinite;
+  }
+  .logo-wordmark{
+    text-align:left;
+  }
+  .logo-the{
+    font-family:'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--sky);
+    display:block;
+    line-height: 1;
+    margin-bottom: 2px;
+    letter-spacing: -0.01em;
+  }
+  .logo-title{
+    font-family:'DM Serif Display', serif;
+    font-size: 2.25rem;
+    font-weight: 400;
+    color:#fff;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .logo-rule{
+    display:block;
+    height:1px;
+    background: var(--border);
+    margin: 7px 0;
+  }
+  .logo-sub{
+    font-family:'DM Mono', monospace;
+    font-size: 0.56rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .lede{
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.55);
+    max-width: 760px;
+    margin-top: 8px;
+  }
+
+  .meta-pills{
+    display:flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 16px;
+  }
+  .pill{
+    font-family:'DM Mono', monospace;
+    font-size: 0.54rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border2);
+    background: rgba(0,87,168,0.08);
+    color: rgba(255,255,255,0.68);
+  }
+
+  .actions{
+    display:flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 18px;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: rgba(0,156,222,0.10);
+    border: 1px solid rgba(0,156,222,0.35);
+    color: var(--sky);
+    text-decoration:none;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+  .btn:hover{
+    background: rgba(0,156,222,0.20);
+    border-color: var(--sky);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+  .btn.primary{
+    background: rgba(0,229,255,0.10);
+    border-color: rgba(0,229,255,0.45);
+    color: #fff;
+  }
+  .btn.primary:hover{
+    background: rgba(0,229,255,0.20);
+    border-color: var(--glow);
+    color: #fff;
+  }
+
+  /* divider */
+  .section-rule{
+    width: 100%;
+    max-width: 860px;
+    display:flex;
+    align-items:center;
+    gap: 14px;
+    margin: 10px 0 22px;
+    animation: fadeUp 0.7s 0.2s ease both;
+    opacity: 0;
+  }
+  .section-rule-line{
+    flex:1;
+    height:1px;
+    background: var(--border);
+  }
+  .section-rule-label{
+    font-family:'DM Mono', monospace;
+    font-size: 0.54rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--sky);
+    white-space: nowrap;
+  }
+
+  /* one-liner clarification (your requested “what this is”) */
+  .archive-note{
+    max-width: 860px;
+    width: 100%;
+    text-align:center;
+    color: rgba(255,255,255,0.38);
+    font-family:'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.10em;
+    line-height: 1.6;
+    margin: 0 0 14px;
+    animation: fadeUp 0.7s 0.28s ease both;
+    opacity: 0;
+  }
+
+  /* GRID */
+  .issues-section{
+    width: 100%;
+    max-width: 860px;
+    animation: fadeUp 0.7s 0.35s ease both;
+    opacity: 0;
+  }
+  .issues-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .issue-btn{
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+    padding: 18px 18px 16px;
+    background: rgba(0,87,168,0.08);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-decoration:none;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+  }
+  .issue-btn::before{
+    content:'';
+    position:absolute;
+    top:0; left:0; right:0;
+    height:2px;
+    background: linear-gradient(90deg, var(--sky), var(--teal));
+    transform: scaleX(0);
+    transform-origin:left;
+    transition: transform 0.3s ease;
+  }
+  .issue-btn:hover{
+    border-color: rgba(0,156,222,0.5);
+    background: rgba(0,87,168,0.16);
+    transform: translateY(-2px);
+  }
+  .issue-btn:hover::before{ transform: scaleX(1); }
+
+  .issue-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap: 10px;
+  }
+  .issue-badge{
+    font-family:'DM Mono', monospace;
+    font-size: 0.50rem;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--teal);
+    display:flex;
+    align-items:center;
+    gap: 6px;
+  }
+  .issue-badge::before{
+    content:'';
+    width:5px; height:5px;
+    border-radius:50%;
+    background: var(--teal);
+    box-shadow: 0 0 6px var(--teal);
+    animation: blink 2s ease-in-out infinite;
+  }
+  .issue-number{
+    font-family:'DM Serif Display', serif;
+    font-size: 1.22rem;
+    font-weight: 400;
+    line-height: 1.1;
+  }
+  .issue-date{
+    font-family:'DM Mono', monospace;
+    font-size: 0.58rem;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.08em;
+  }
+  .issue-arrow{
+    color: var(--sky);
+    font-size: 1rem;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.2s, transform 0.2s;
+    margin-top: 2px;
+  }
+  .issue-btn:hover .issue-arrow{
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .hl{
+    display:flex;
+    flex-direction:column;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .hl-row{
+    display:flex;
+    gap: 8px;
+    align-items:flex-start;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: rgba(255,255,255,0.62);
+  }
+  .hl-label{
+    font-family:'DM Mono', monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--sky);
+    border: 1px solid rgba(0,156,222,0.28);
+    background: rgba(0,156,222,0.08);
+    padding: 5px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+    margin-top: 1px;
+  }
+
+  .hl-link{
+    text-decoration:none;
+    color: inherit;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
+  .hl-link:hover{
+    background: rgba(0,156,222,0.10);
+  }
+  .hl-link .hl-label{
+    border-color: rgba(0,229,255,0.45);
+    background: rgba(0,156,222,0.16);
+  }
+
+  /* Skeleton loader */
+  .issue-skeleton{
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+    padding: 18px 18px 16px;
+    background: rgba(0,87,168,0.06);
+    border: 1px solid rgba(0,156,222,0.10);
+    border-radius: 12px;
+    overflow:hidden;
+  }
+  .skel{
+    background: linear-gradient(90deg,
+      rgba(255,255,255,0.04) 0%,
+      rgba(255,255,255,0.09) 50%,
+      rgba(255,255,255,0.04) 100%);
+    background-size: 200% 100%;
+    border-radius: 6px;
+    animation: shimmer 1.6s ease-in-out infinite;
+  }
+  .skel-badge{ height:10px; width:60px; }
+  .skel-title{ height:20px; width:70%; margin-top:4px; }
+  .skel-date { height:10px; width:40%; }
+  .skel-line { height:12px; width:100%; margin-top:6px; }
+  .skel-line2{ height:12px; width:85%; }
+  @keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .issues-empty{
+    grid-column:1/-1;
+    padding: 34px 22px;
+    border: 1px dashed rgba(0,156,222,0.22);
+    border-radius: 12px;
+    text-align:center;
+    color: rgba(255,255,255,0.30);
+    font-size: 0.70rem;
+    font-family:'DM Mono', monospace;
+    letter-spacing: 0.08em;
+  }
+
+  /* Coming-soon card */
+  .issue-soon{
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+    padding: 18px 18px 16px;
+    background: rgba(0,87,168,0.06);
+    border: 1px dashed rgba(0,156,222,0.28);
+    border-radius: 12px;
+    color: rgba(255,255,255,0.40);
+  }
+  .issue-soon-badge{
+    font-family:'DM Mono', monospace;
+    font-size: 0.48rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(0,229,255,0.45);
+  }
+  .issue-soon-number{
+    font-family:'DM Serif Display', serif;
+    font-size: 1.22rem;
+    font-weight: 400;
+    line-height: 1.1;
+    color: rgba(255,255,255,0.30);
+  }
+  .issue-soon-date{
+    font-family:'DM Mono', monospace;
+    font-size: 0.58rem;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.08em;
+  }
+  .issue-soon-note{
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.28);
+    line-height: 1.5;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* Issue count badge on section divider */
+  .section-rule-count{
+    font-family:'DM Mono', monospace;
+    font-size: 0.48rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(0,156,222,0.22);
+    background: rgba(0,156,222,0.07);
+    color: rgba(255,255,255,0.35);
+    white-space: nowrap;
+  }
+
+  /* ABOUT */
+  .about-strip{
+    width: 100%;
+    max-width: 860px;
+    margin-top: 38px;
+    padding: 26px 28px;
+    background: rgba(0,48,135,0.12);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    animation: fadeUp 0.7s 0.4s ease both;
+    opacity: 0;
+  }
+  .about-label{
+    font-family:'DM Mono', monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--sky);
+    margin-bottom: 10px;
+  }
+  .about-text{
+    font-size: 0.82rem;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.52);
+    max-width: 760px;
+  }
+  .about-editors{
+    margin-top: 14px;
+    display:flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .editor{
+    display:flex;
+    flex-direction:column;
+    gap: 2px;
+  }
+  .editor-name{
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.78);
+  }
+  .editor-role{
+    font-family:'DM Mono', monospace;
+    font-size: 0.50rem;
+    letter-spacing: 0.10em;
+    color: rgba(255,255,255,0.30);
+    text-transform: uppercase;
+  }
+
+  /* FOOTER */
+  .footer{
+    width: 100%;
+    max-width: 860px;
+    margin-top: 44px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.65s ease both;
+    opacity: 0;
+  }
+  .footer-left{
+    font-size: 0.60rem;
+    color: rgba(255,255,255,0.25);
+    line-height: 1.7;
+    font-family:'DM Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+  .footer-links{
+    display:flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items:center;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes glowPulse { 0%,100% { filter: drop-shadow(0 0 4px rgba(0,156,222,0.5)); } 50% { filter: drop-shadow(0 0 14px rgba(0,229,255,0.85)); } }
+  @keyframes eegPulse {
+    0%   { stroke-dashoffset:220; opacity:0; }
+    6%   { opacity:1; }
+    72%  { opacity:1; }
+    88%  { opacity:0.2; }
+    100% { stroke-dashoffset:0; opacity:0; }
+  }
+  @keyframes somaPulse { 0%,100% { r:3.5; opacity:0.8; } 50% { r:5; opacity:1; } }
+  @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+
+  .eeg-anim { stroke-dasharray:220; stroke-dashoffset:220; animation: eegPulse 3s ease-in-out infinite; }
+  .soma-anim { animation: somaPulse 3s ease-in-out infinite; }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px){
+    .logo-lockup{ flex-direction:column; gap: 12px; }
+    .logo-wordmark{ text-align:center; }
+    .logo-title{ font-size: 1.85rem; }
+    .actions{ flex-direction: column; align-items: center; gap: 10px; }
+    .actions .btn{ width: 100%; max-width: 280px; justify-content: center; }
+    .footer{ flex-direction: column; gap: 18px; }
+    .footer-links{ flex-direction: column; align-items: flex-start; gap: 10px; }
+    .about-strip{ padding: 20px 18px; }
+    .hero{ padding: 44px 16px 28px; }
+  }
+</style>
+</head>
+
+<body>
+  <div class="constellation-bar"></div>
+
+  <div class="page">
+
+    <div class="hero">
+      <div class="logo-lockup">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="72" height="72" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#009CDE" stop-opacity="0.2"/>
+                <stop offset="100%" stop-color="#003087" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="core" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#00E5FF"/>
+                <stop offset="60%" stop-color="#009CDE"/>
+                <stop offset="100%" stop-color="#0057A8"/>
+              </radialGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="1.6" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <circle cx="32" cy="32" r="30" fill="url(#halo)"/>
+            <circle cx="32" cy="32" r="28" stroke="#009CDE" stroke-width="0.5" stroke-opacity="0.2"/>
+            <path d="M24 20 L17 11 L11 11" stroke="#0057A8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.75"/>
+            <circle cx="11" cy="11" r="2.2" fill="#009CDE" opacity="0.7"/>
+            <path d="M38 20 L45 11 L51 13" stroke="#0057A8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.75"/>
+            <circle cx="51" cy="13" r="2.2" fill="#00B5CC" opacity="0.7"/>
+            <path d="M43 30 L52 26 L58 19" stroke="#0057A8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.7"/>
+            <circle cx="58" cy="19" r="1.8" fill="#009CDE" opacity="0.55"/>
+            <path d="M39 44 L47 51 L53 53" stroke="#0057A8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.7"/>
+            <circle cx="53" cy="53" r="2" fill="#00A651" opacity="0.65"/>
+            <path d="M31 46 L29 55 L23 59" stroke="#0057A8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.65"/>
+            <circle cx="23" cy="59" r="1.8" fill="#7B2D8B" opacity="0.55"/>
+            <path d="M21 32 L5 32" stroke="#0057A8" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.75"/>
+            <path d="M5 32 L1 27 M5 32 L1 37" stroke="#0057A8" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.55"/>
+            <rect x="16" y="9.5" width="3" height="3" rx="0.5" fill="#009CDE" opacity="0.75" transform="rotate(45 17.5 11)"/>
+            <rect x="43.5" y="9.5" width="3" height="3" rx="0.5" fill="#00B5CC" opacity="0.75" transform="rotate(45 45 11)"/>
+            <circle cx="32" cy="32" r="13.5" fill="#060D1E" stroke="#009CDE" stroke-width="1.3"/>
+            <circle cx="32" cy="32" r="10" fill="#0A1628" stroke="#0057A8" stroke-width="0.6" opacity="0.8"/>
+            <path d="M8 32 L18 32 L21 32 L23 26 L25.5 38 L28 23 L30 41 L32 27.5 L34 36 L36 30.5 L38.5 32 L41 32 L56 32"
+              stroke="#009CDE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.2"/>
+            <path class="eeg-anim"
+              d="M8 32 L18 32 L21 32 L23 26 L25.5 38 L28 23 L30 41 L32 27.5 L34 36 L36 30.5 L38.5 32 L41 32 L56 32"
+              stroke="#00E5FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#glow)"/>
+            <circle class="soma-anim" cx="32" cy="32" r="3.5" fill="url(#core)" filter="url(#glow)"/>
+          </svg>
+        </div>
+
+        <div class="logo-wordmark">
+          <span class="logo-the">The</span>
+          <div class="logo-title">Neurology AI Pulse</div>
+          <span class="logo-rule"></span>
+          <div class="logo-sub">Clinical AI · Governance · Practical Insight</div>
+        </div>
+      </div>
+
+      <p class="lede">
+        A clinician-led monthly digest providing distilled neurology AI knowledge designed to highlight high-signal innovation,
+        surface legal and governance developments, and support deeper dives for healthcare teams navigating AI and generative AI.
+      </p>
+
+      <div class="meta-pills" aria-label="Topics">
+        <span class="pill">Neurology</span>
+        <span class="pill">Clinical AI</span>
+        <span class="pill">Governance & Legal</span>
+        <span class="pill">Generative AI</span>
+      </div>
+
+      <div class="actions" aria-label="Primary actions">
+        <a class="btn primary" id="latestLink" href="Issues/Mar2026/export_web/index.html#/preview">Read Latest Issue</a>
+        <a class="btn" href="editorial-standards.html">Editorial Standards</a>
+        <a class="btn" href="mailto:yelsherif@northwell.edu?subject=Neurology%20AI%20Pulse%20-%20Suggestions%20and%20Comments">Contact Us</a>
+      </div>
+    </div>
+
+    <div class="section-rule">
+      <div class="section-rule-line"></div>
+      <div class="section-rule-label">Issues</div>
+      <span class="section-rule-count" id="issueCount" style="display:none"></span>
+      <div class="section-rule-line"></div>
+    </div>
+
+    <div class="archive-note">
+      Each issue includes a <strong style="color:rgba(255,255,255,0.75); font-weight:700;">Spotlight</strong> feature and a
+      <strong style="color:rgba(255,255,255,0.75); font-weight:700;">Governance</strong> feature to support clinical depth + accountability.
+    </div>
+
+    <div class="issues-section">
+      <div class="issues-grid" id="issuesGrid">
+        <div class="issue-skeleton">
+          <div class="skel skel-badge"></div>
+          <div class="skel skel-title"></div>
+          <div class="skel skel-date"></div>
+          <div class="skel skel-line" style="margin-top:10px"></div>
+          <div class="skel skel-line2"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-strip">
+      <div class="about-label">About this publication</div>
+      <p class="about-text">
+        Neurology AI Pulse is designed to be an easy-to-digest entry point that highlights what matters and makes it simple to go deeper.
+        We aim to balance practical clinical utility with governance: privacy, safety, accountability, and emerging cognitive rights.
+      </p>
+      <div class="about-editors">
+        <div class="editor">
+          <div class="editor-name">Yasir El-Sherif, MD PhD</div>
+          <div class="editor-role">Editor-in-Chief</div>
+        </div>
+        <div class="editor">
+          <div class="editor-name">Jai Shahani, MD</div>
+          <div class="editor-role">Associate Editor</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-left">
+        © <span id="yr"></span> Neurology AI Pulse<br>
+        Staten Island University Hospital · Northwell Health<br>
+        Department of Neurology
+      </div>
+
+      <div class="footer-links">
+        <a class="btn" href="editorial-standards.html">Editorial Standards</a>
+        <a class="btn" href="mailto:yelsherif@northwell.edu?subject=Neurology%20AI%20Pulse%20-%20Suggestions%20and%20Comments">Contact Us</a>
+        <div style="font-family:'DM Mono', monospace; font-size:0.56rem; color:rgba(255,255,255,0.25); letter-spacing:0.08em;">
+          Visitors: <span id="visitor-count" style="color:var(--sky)">…</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page -->
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  async function loadVisitors() {
+    try {
+      const res = await fetch('https://api.counterapi.dev/v1/neurology-ai-pulse-el-sherif/main/up', { cache: 'no-store' });
+      const data = await res.json();
+      document.getElementById('visitor-count').innerText = (data.count ?? 0).toLocaleString();
+    } catch (e) {
+      document.getElementById('visitor-count').innerText = "LIVE";
+    }
+  }
+
+  /*
+    ISSUE AUTO-DETECTION
+    Looks for:
+      Issues/{Mon}{YYYY}/export_web/index.html
+
+    OPTIONAL HIGHLIGHTS FILE
+      Issues/{Mon}{YYYY}/issue.json
+
+    Example issue.json:
+    {
+      "spotlight": "AR/vision-based movement analysis for objective neuro exams.",
+      "governance": "Legal protections for commercial brain-computer interfaces and cognitive rights."
+    }
+  */
+
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const MONTH_FULL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  // Launch: March 2026 (0-indexed month)
+  const LAUNCH_YEAR  = 2026;
+  const LAUNCH_MONTH = 2;
+
+  function issueIndexPath(year, monthIdx) {
+    return `Issues/${MONTHS[monthIdx]}${year}/export_web/index.html#/preview`;
+  }
+  function issueHeadPath(year, monthIdx) {
+    return `Issues/${MONTHS[monthIdx]}${year}/export_web/index.html`;
+  }
+  function issueMetaPath(year, monthIdx) {
+    return `Issues/${MONTHS[monthIdx]}${year}/issue.json`;
+  }
+  function issueName(year, monthIdx) {
+    return `${MONTH_FULL[monthIdx]} ${year}`;
+  }
+
+  function monthsToCheck() {
+    const now = new Date();
+    const endYear  = now.getFullYear();
+    const endMonth = now.getMonth() + 1; // check one month ahead
+
+    const list = [];
+    let y = LAUNCH_YEAR;
+    let m = LAUNCH_MONTH;
+    while (y < endYear || (y === endYear && m <= endMonth)) {
+      list.push({ year: y, month: m });
+      m++;
+      if (m > 11) { m = 0; y++; }
+    }
+    return list;
+  }
+
+  function headOk(url) {
+    return fetch(url, { method:'HEAD', cache:'no-store' })
+      .then(r => r.ok)
+      .catch(() => false);
+  }
+
+  async function fetchHighlights(url) {
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) return null;
+
+      const data = await res.json();
+      if (!data || (typeof data !== 'object')) return null;
+
+      // Supports BOTH formats:
+      // A) spotlight/governance as strings
+      // B) spotlight/governance as objects: { title, url, oneLine }
+      const pickText = (v) => {
+        if (!v) return '';
+        if (typeof v === 'string') return v.trim();
+        if (typeof v === 'object') return String(v.oneLine || v.title || '').trim();
+        return '';
+      };
+
+      const spotlight = pickText(data.spotlight);
+      const governance = pickText(data.governance);
+
+      // Optional: preserve URLs if you want later
+      const pickUrl = (v) => (v && typeof v === 'object' ? String(v.url || '').trim() : '');
+      const spotlightUrl = pickUrl(data.spotlight);
+      const governanceUrl = pickUrl(data.governance);
+
+      if (!spotlight && !governance) return null;
+
+      return { spotlight, governance, spotlightUrl, governanceUrl };
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function pad3(n){ return String(n).padStart(3,'0'); }
+
+  async function loadIssues() {
+    const grid = document.getElementById('issuesGrid');
+    const months = monthsToCheck();
+
+    const checks = await Promise.all(
+      months.map(async ({ year, month }, i) => {
+        const exists = await headOk(issueHeadPath(year, month));
+        return { year, month, exists, issueNumber: i + 1 };
+      })
+    );
+
+    const available = checks.filter(x => x.exists);
+    grid.innerHTML = '';
+
+    // Update count badge
+    const countEl = document.getElementById('issueCount');
+    if (countEl) {
+      if (available.length > 0) {
+        countEl.textContent = available.length === 1 ? '1 Issue' : `${available.length} Issues`;
+        countEl.style.display = '';
+      }
+    }
+
+    if (available.length === 0) {
+      grid.innerHTML = `
+        <div class="issue-soon">
+          <div class="issue-soon-badge">Coming Soon</div>
+          <div class="issue-soon-number">Issue 001</div>
+          <div class="issue-soon-date">March 2026</div>
+          <div class="issue-soon-note">The inaugural issue is in preparation. Check back soon.</div>
+        </div>`;
+      return;
+    }
+
+    // newest first
+    available.reverse();
+
+    // set "Read Latest Issue" button dynamically
+    const latest = available[0];
+    const latestHref = issueIndexPath(latest.year, latest.month);
+    const latestBtn = document.getElementById('latestLink');
+    if (latestBtn) {
+      latestBtn.href = latestHref;
+      latestBtn.setAttribute('aria-label', `Read latest issue — ${issueName(latest.year, latest.month)}`);
+    }
+
+    for (const item of available) {
+      const { year, month, issueNumber } = item;
+
+      const href = issueIndexPath(year, month);
+      const meta = await fetchHighlights(issueMetaPath(year, month));
+
+      const spotlight    = meta?.spotlight    || "Clinical innovation and practical workflows curated for neurologic practice.";
+      const governance   = meta?.governance   || "Governance, privacy, and accountability developments shaping clinical AI adoption.";
+      const spotlightUrl  = meta?.spotlightUrl  || '';
+      const governanceUrl = meta?.governanceUrl || '';
+
+      // Build highlight rows — clickable to the article URL when present
+      const hlRow = (label, text, url) => {
+        const inner = `<span class="hl-label">${label}</span><span>${escapeHtml(text)}</span>`;
+        if (url) {
+          return `<a class="hl-row hl-link" href="${escapeHtml(url)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${inner}</a>`;
+        }
+        return `<div class="hl-row">${inner}</div>`;
+      };
+
+      const card = document.createElement('a');
+      card.href = href;
+      card.className = 'issue-btn';
+
+      card.innerHTML = `
+        <div class="issue-top">
+          <div class="issue-badge">Available</div>
+          <div class="issue-arrow">→</div>
+        </div>
+
+        <div class="issue-number">Issue ${pad3(issueNumber)}</div>
+        <div class="issue-date">${issueName(year, month)}</div>
+
+        <div class="hl" aria-label="Issue highlights">
+          ${hlRow('Spotlight', spotlight, spotlightUrl)}
+          ${hlRow('Governance', governance, governanceUrl)}
+        </div>
+      `;
+
+      grid.appendChild(card);
+    }
+  }
+
+
+  function escapeHtml(str) {
+    const d = document.createElement('div');
+    d.appendChild(document.createTextNode(str));
+    return d.innerHTML;
+  }
+
+  // Init
+  loadVisitors();
+  loadIssues();
+</script>
+</body>
+</html>
