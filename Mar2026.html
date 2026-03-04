@@ -19,503 +19,240 @@
   }
   .copy-btn{cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:none;border-radius:6px;font-size:12px;font-weight:600;color:white;transition:opacity 0.2s;}
   .copy-btn:hover{opacity:0.85;}
-  .nl-collapsible-header{cursor:pointer;user-select:none;}
-  .nl-collapsible-header:hover{opacity:0.92;}
+  .rss-item:hover { background-color: #f8fafc; }
 </style>
 </head>
 <body>
 <div class="nl-outer" style="max-width:800px;margin:0 auto;padding:20px;">
 <div style="background:#ffffff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.08);overflow:hidden;">
-  <div style="padding:24px;"><div style="background:linear-gradient(135deg,#1e3a5f,#7e2100);color:white;text-align:center;padding:40px 32px 32px;border-radius:12px 12px 0 0;">
-          
-          <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;opacity:0.8;margin:0 0 12px;font-family:monospace;">Issue 001 · March 2026</p>
-          <h1 style="font-size:clamp(24px,5vw,38px);font-weight:800;margin:0 0 8px;font-family:'Georgia', serif;line-height:1.2;">The Neurology AI Pulse</h1>
-          <p style="font-size:clamp(14px,2.5vw,18px);font-style:italic;opacity:0.9;margin:0 0 16px;">Practical AI Insights for the Modern Neurologist</p>
-          <p style="font-size:11px;opacity:0.7;margin:0;">Edited by Yasir El-Sherif MD PhD · Jai Shahani MD · Staten Island University Hospital</p>
-        </div></div><hr style="border:none;border-top:1px solid #e2e8f0;margin:0;" />
-<div style="padding:24px;background-color:#ffffff;"><div style="background:#551029;color:#ffffff;overflow:hidden;padding:10px 0;">
-          <div style="display:inline-flex;animation:marquee 31s linear infinite;white-space:nowrap;min-width:200%;">
-            <a href="https://www.ucl.ac.uk/brain-sciences/news/2026/feb/ai-powered-virtual-trials-unlock-new-era-personalised-stroke-care" target="_blank" rel="noopener noreferrer" style="color:#ffffff;text-decoration:none;"><span style="margin:0 32px;white-space:nowrap;font-size:16px;display:inline-flex;align-items:center;gap:8px;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#ffffff;opacity:0.6;flex-shrink:0;"></span>AI-powered virtual trials using &gt;100 million simulated stroke scenarios can now tailor personalized acute ischemic stroke treatment recommendations more accurately than traditional models</span></a><a href="https://www.michaeljfox.org/news/how-artificial-intelligence-helps-power-parkinsons-research" target="_blank" rel="noopener noreferrer" style="color:#ffffff;text-decoration:none;"><span style="margin:0 32px;white-space:nowrap;font-size:16px;display:inline-flex;align-items:center;gap:8px;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#ffffff;opacity:0.6;flex-shrink:0;"></span>Machine learning applied to over 2,500 Parkinson’s study participants is helping define biological subtypes and forecast disease progression, advancing precision neurology efforts</span></a><a href="https://www.ucl.ac.uk/brain-sciences/news/2026/feb/ai-powered-virtual-trials-unlock-new-era-personalised-stroke-care" target="_blank" rel="noopener noreferrer" style="color:#ffffff;text-decoration:none;"><span style="margin:0 32px;white-space:nowrap;font-size:16px;display:inline-flex;align-items:center;gap:8px;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#ffffff;opacity:0.6;flex-shrink:0;"></span>AI-powered virtual trials using &gt;100 million simulated stroke scenarios can now tailor personalized acute ischemic stroke treatment recommendations more accurately than traditional models</span></a><a href="https://www.michaeljfox.org/news/how-artificial-intelligence-helps-power-parkinsons-research" target="_blank" rel="noopener noreferrer" style="color:#ffffff;text-decoration:none;"><span style="margin:0 32px;white-space:nowrap;font-size:16px;display:inline-flex;align-items:center;gap:8px;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#ffffff;opacity:0.6;flex-shrink:0;"></span>Machine learning applied to over 2,500 Parkinson’s study participants is helping define biological subtypes and forecast disease progression, advancing precision neurology efforts</span></a>
-          </div>
-        </div></div>
-<div style="padding:24px;background-color:#ffffff;"><div style="padding:8px 0;"><!-- Mission & Welcome (full-width opening block) -->
-<section class="nap-opening" aria-labelledby="nap-mission-title">
-  <div class="nap-opening__inner">
-    <header class="nap-opening__header">
-      <p class="nap-opening__kicker">Mission &amp; Welcome</p>
-      <h1 id="nap-mission-title" class="nap-opening__title">The Neurology AI Pulse</h1>
-    </header>
-
-    <p class="nap-opening__body">
-      As we continue to navigate the rapid evolution of AI in medicine, we created
-      <strong>The Neurology AI Pulse</strong> to provide a direct bridge between technical innovation
-      and clinical practice. Our mission is to translate high-dimensional data and complex algorithms
-      into actionable insights for the SIUH community and the broader neuroscientific field. Whether
-      you are integrating these tools into your daily workflow or evaluating them from a distance,
-      this newsletter is designed to keep you informed, critical, and prepared. From the latest in
-      stroke triage to the ethics of generative models, we explore the intersection of machine
-      learning and human neurology together.
-    </p>
+  
+  <div style="padding:24px;">
+    <div style="background:linear-gradient(135deg,#1e3a5f,#7e2100);color:white;text-align:center;padding:40px 32px 32px;border-radius:12px 12px 0 0;">
+      <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;opacity:0.8;margin:0 0 12px;font-family:monospace;">Issue 001 · March 2026</p>
+      <h1 style="font-size:clamp(24px,5vw,38px);font-weight:800;margin:0 0 8px;font-family:'Georgia', serif;line-height:1.2;">The Neurology AI Pulse</h1>
+      <p style="font-size:clamp(14px,2.5vw,18px);font-style:italic;opacity:0.9;margin:0 0 16px;">Practical AI Insights for the Modern Neurologist</p>
+      <p style="font-size:11px;opacity:0.7;margin:0;">Edited by Yasir El-Sherif MD PhD · Jai Shahani MD · Staten Island University Hospital</p>
+    </div>
   </div>
-</section>
 
-<style>
-  /* Opening block: designed to fill the full container width */
-  .nap-opening{
-    width:100%;
-    box-sizing:border-box;
-    border:1px solid rgba(0,0,0,.08);
-    border-radius:16px;
-    padding:28px 26px;
-    margin:0;
-    background: linear-gradient(135deg, rgba(45,125,255,.10), rgba(142,61,255,.10));
-    position:relative;
-    overflow:hidden;
-  }
-  .nap-opening::before{
-    content:"";
-    position:absolute;
-    inset:-40% -20%;
-    background: radial-gradient(circle at 20% 20%, rgba(45,125,255,.18), transparent 55%),
-                radial-gradient(circle at 80% 30%, rgba(142,61,255,.16), transparent 55%),
-                radial-gradient(circle at 40% 90%, rgba(0,0,0,.06), transparent 55%);
-    filter: blur(2px);
-    pointer-events:none;
-  }
-  .nap-opening__inner{
-    position:relative;
-    max-width: 980px;         /* remove if you truly want edge-to-edge text */
-    margin: 0 auto;
-  }
-  .nap-opening__header{
-    margin:0 0 14px 0;
-  }
-  .nap-opening__kicker{
-    margin:0 0 6px 0;
-    font-size:12px;
-    letter-spacing:.12em;
-    text-transform:uppercase;
-    opacity:.75;
-  }
-  .nap-opening__title{
-    margin:0;
-    font-size:28px;
-    line-height:1.15;
-    letter-spacing:-.01em;
-  }
-  .nap-opening__body{
-    margin:12px 0 0 0;
-    font-size:16px;
-    line-height:1.65;
-    opacity:.95;
-  }
+  <hr style="border:none;border-top:1px solid #e2e8f0;margin:0;" />
 
-  /* Mobile tuning */
-  @media (max-width: 640px){
-    .nap-opening{ padding:22px 18px; border-radius:14px; }
-    .nap-opening__title{ font-size:24px; }
-    .nap-opening__body{ font-size:15px; }
-  }
-</style></div></div>
-<div style="padding:24px;background-color:#ffffff;"><div style="border:1px solid #e2e8f0;border-radius:12px;padding:24px;background:white;">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-            <span style="color:#f59e0b;">✦</span>
-            <span style="font-size:10px;font-family:monospace;letter-spacing:1px;text-transform:uppercase;color:#94a3b8;">Spotlight · Neurology / Education 2026</span>
-          </div>
-          <h3 style="font-size:24px;font-weight:700;margin:0 0 12px;color:#1e293b;">
-            <a href="https://pdfs.semanticscholar.org/0cbd/8aa7fbf34eb9cbab3a2e528094623a4e95c1.pdf" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Spotlight: Education Research: Bridging the Artificial Intelligence Training Gap</a>
-          </h3>
-          <p style="font-size:14px;color:#475569;margin:0 0 16px;line-height:1.7;">A national survey conducted among Italian neurology residents has highlighted a significant disparity between the extensive use of AI tools and the lack of formal education in AI. Over 40% of residents utilize AI tools weekly, primarily relying on generative AI for clinical decision support. Yet, nearly 80% report that they have received no integrated training on AI as part of their curriculum, and only about one-third consider their AI knowledge to be &quot;good&quot; or better.
+  <div style="padding:24px;background-color:#ffffff;">
+    <div style="background:#551029;color:#ffffff;overflow:hidden;padding:10px 0;">
+      <div style="display:inline-flex;animation:marquee 31s linear infinite;white-space:nowrap;min-width:200%;">
+        <span style="margin:0 32px;white-space:nowrap;font-size:16px;display:inline-flex;align-items:center;gap:8px;">AI-powered virtual trials unlock new era of personalised stroke care</span>
+        <span style="margin:0 32px;white-space:nowrap;font-size:16px;display:inline-flex;align-items:center;gap:8px;">Machine learning applied to over 2,500 Parkinson’s study participants defines biological subtypes</span>
+        <span style="margin:0 32px;white-space:nowrap;font-size:16px;display:inline-flex;align-items:center;gap:8px;">AI-powered virtual trials unlock new era of personalised stroke care</span>
+      </div>
+    </div>
+  </div>
 
-Despite this educational gap, there is a strong appetite for learning: more than 90% of respondents are eager for structured AI education, with a preference for interactive workshops and hands-on training integrated into their curricula as opposed to passive learning methods. Additionally, concerns about the reliability of AI tools, data privacy, and ethical considerations are prominent, highlighting the urgent need for comprehensive, guided instruction in AI to ensure that residents are not only competent but also confident in their use of these technologies.</p>
-          <div style="background:#f8fafc;border-radius:8px;padding:16px;margin-bottom:16px;"><p style="font-size:10px;font-family:monospace;letter-spacing:1px;text-transform:uppercase;color:#94a3b8;margin:0 0 4px;">Context</p><p style="font-size:13px;color:#334155;margin:0;">AI is already embedded in neurology workflows, particularly neuroimaging and clinical decision support, but education has not kept pace. This gap risks uncritical adoption of tools without sufficient understanding of limitations, bias, or governance—making structured, residency-level AI training increasingly essential.</p></div>
-          <div style="border-left:3px solid #0d9488;padding-left:16px;"><p style="font-size:14px;font-style:italic;color:#0d9488;margin:0;">AI is already here; training is not.
-If we expect neurologists to use AI responsibly, education must shift from optional exposure to core competency—now..</p></div>
-        </div></div><hr style="border:none;border-top:1px solid #e2e8f0;margin:0;" />
-<div style="padding:24px;background-color:#ffffff;"><div style="padding:8px 0;">
-          <h3 style="font-size:20px;font-weight:700;margin:0 0 16px;color:#1e293b;">Featured Articles</h3>
-          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;"><div style="border:1px solid #e2e8f0;border-radius:12px;padding:20px;background:white;">
-            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;">
-              <span style="font-size:10px;font-family:monospace;letter-spacing:1px;text-transform:uppercase;color:#94a3b8;">Stroke Jan. 2026</span>
-              <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;background:#fffbeb;color:#d97706;">Moderate</span>
-            </div>
-            <h4 style="font-size:16px;font-weight:700;margin:0 0 8px;color:#1e293b;">
-              <a href="https://www.ahajournals.org/doi/epub/10.1161/STROKEAHA.125.052146" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Artificial Intelligence and Novel Trial Designs for Acute Ischemic Stroke: Opportunities and Challenges</a>
-            </h4>
-            <p style="font-size:13px;color:#475569;margin:0 0 12px;">This Stroke Treatment Academic Industry Roundtable XIII review outlines how artificial intelligence and novel trial designs—including platform, adaptive, and pragmatic trials—can accelerate acute ischemic stroke research while improving efficiency, enrollment, and real-world relevance. The authors emphasize that AI already plays a critical role in stroke imaging and trial screening, but its future impact depends on high-quality data, transparency, regulatory oversight, and a “human-in-the-loop” model to ensure safety, equity, and clinical validity.</p>
-            <div style="border-left:3px solid #0d9488;padding-left:12px;"><p style="font-size:13px;font-style:italic;color:#0d9488;margin:0;">Stroke trials are finally catching up to clinical reality, and AI-enabled platform designs may be the fastest path to answering meaningful questions at scale. The challenge ahead is not technical capability, but disciplined governance—keeping clinicians in control while using AI to move faster without cutting corners.</p></div>
-          </div><div style="border:1px solid #e2e8f0;border-radius:12px;padding:20px;background:white;">
-            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;">
-              <span style="font-size:10px;font-family:monospace;letter-spacing:1px;text-transform:uppercase;color:#94a3b8;">Scientific Data (Nature Portfolio), January 2026</span>
-              <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;background:#fef2f2;color:#dc2626;">High</span>
-            </div>
-            <h4 style="font-size:16px;font-weight:700;margin:0 0 8px;color:#1e293b;">
-              <a href="https://www.nature.com/articles/s41597-025-06512-5" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">An EEG Dataset for Visual Imagery–Based Brain–Computer Interface</a>
-            </h4>
-            <p style="font-size:13px;color:#475569;margin:0 0 12px;">This study introduces a publicly available 32-channel, 1000 Hz EEG dataset from 22 participants performing structured visual imagery tasks across increasing cognitive complexity (geometric figures, animals, and everyday objects), addressing a major limitation in BCI research dominated by motor imagery data. Using deep learning (EEGNet), the authors demonstrate stable and reproducible decoding accuracy up to ~76%, establishing visual imagery as a viable control paradigm for next-generation, non-invasive brain–computer interfaces.</p>
-            <div style="border-left:3px solid #0d9488;padding-left:12px;"><p style="font-size:13px;font-style:italic;color:#0d9488;margin:0;">This dataset quietly moves BCI research beyond “move your hand” paradigms toward thought-driven, semantic control, which is far more aligned with real clinical and assistive use. For neurology, this represents a foundational step toward cognitive BCIs that could eventually serve patients with severe motor impairment, aphasia, or disorders of consciousness.</p></div>
-          </div></div>
-        </div></div><hr style="border:none;border-top:1px solid #e2e8f0;margin:0;" />
-<div style="padding:24px;"></div><hr style="border:none;border-top:1px solid #e2e8f0;margin:0;" />
-<div style="padding:24px;background-color:#01c7fc;"><div>
-          <h3 style="font-size:20px;font-weight:700;margin:0 0 16px;color:#1e293b;">Department &amp; Organization News</h3>
-          <div style="display:grid;grid-template-columns:repeat(1,1fr);gap:16px;"><div style="background:white;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;"><div style="display:flex;gap:0;align-items:stretch;">
-                <div style="flex-shrink:0;width:140px;min-width:140px;"><img src="https://dam.northwell.edu/asset/6d590c76-58bd-4300-b233-dd0166af0b56/Drupal/Vo-Koppel-2025-jpg.jpg" alt="" style="width:100%;height:100%;min-height:120px;object-fit:contain;background:#f8fafc;display:block;" /></div>
-                <div style="padding:14px;flex:1;min-width:0;">
-                  <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#0d9488;">Northwell Health</span>
-                  <h4 style="font-size:15px;font-weight:700;margin:5px 0 7px;color:#1e293b;line-height:1.4;"><a href="https://feinstein.northwell.edu/news/artificial-intelligence-identifies-psychosis-alzheimers-disease" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Artificial intelligence identifies brain network predictive of psychosis in Alzheimer’s disease</a></h4>
-                  <p style="font-size:13px;color:#475569;line-height:1.5;margin:0 0 8px;">Researchers at the Feinstein Institutes used an AI model to identify a distinct brain metabolic network—termed the Alzheimer’s Disease Psychosis Network (ADPN) from FDG-PET scans that distinguishes individuals with Alzheimer’s psychosis from those without and healthy elderly controls with high accuracy, offering a potential biomarker for early prediction and progression tracking of psychotic symptoms in Alzheimer’s disease</p>
-                  <a href="https://feinstein.northwell.edu/news/artificial-intelligence-identifies-psychosis-alzheimers-disease" target="_blank" rel="noopener noreferrer" style="font-size:12px;color:#1e293b;font-weight:600;text-decoration:none;">Read more →</a>
-                </div>
-              </div></div></div>
-        </div></div><hr style="border:none;border-top:1px solid #e2e8f0;margin:0;" />
-<div style="padding:24px;"><div style="border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;background:white;">
-           <div style="padding:12px 20px;background:#1e293b;display:flex;align-items:center;justify-content:space-between;">
-             <div style="display:flex;align-items:center;gap:8px;">
-               <span style="color:white;opacity:0.8;">📡</span>
-               <span style="color:white;font-weight:700;font-size:14px;">Latest News</span>
-             </div>
-             <button id="rss_v06ieak97_refresh" class="rss-refresh-btn" data-action="refresh-rss" data-target="rss_v06ieak97" data-feeds='[{"id":"y97c7f233","label":"Nature Reviews Neurology","url":"http://www.nature.com/nrneurol/current_issue/rss","enabled":true,"keywordFilters":[]},{"id":"lhsayp8ov","label":"Stroke & Vascular Neurology","url":"http://svn.smart01.highwire.org/rss/current.xml","enabled":true,"keywordFilters":[]}]' data-filters='[]' data-per-feed="5" data-total="20" style="background:#0d9488;color:white;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;transition:opacity 0.2s;">↻ Refresh</button>
-           </div>
-           <div id="rss_v06ieak97" style="padding:0;">
-             
-           <div style="padding:12px 20px;border-bottom:1px solid #f1f5f9;">
-             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-               <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:2px 6px;border-radius:4px;background:#0d948820;color:#0d9488;">Nature Reviews Neurology</span>
-             </div>
-             <a href="https://www.nature.com/articles/s41582-025-00456-7" target="_blank" rel="noopener noreferrer" style="font-size:14px;font-weight:600;color:#1e293b;text-decoration:none;display:block;line-height:1.4;">Addressing multiple sclerosis disparities in Latin American and other populations</a>
-             
-           </div>
-           <div style="padding:12px 20px;border-bottom:1px solid #f1f5f9;">
-             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-               <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:2px 6px;border-radius:4px;background:#0d948820;color:#0d9488;">Nature Reviews Neurology</span>
-             </div>
-             <a href="https://www.nature.com/articles/s41582-025-00457-6" target="_blank" rel="noopener noreferrer" style="font-size:14px;font-weight:600;color:#1e293b;text-decoration:none;display:block;line-height:1.4;">RNA polyadenylation altered by TDP43 loss of function</a>
-             
-           </div>
-           <div style="padding:12px 20px;border-bottom:1px solid #f1f5f9;">
-             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-               <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:2px 6px;border-radius:4px;background:#0d948820;color:#0d9488;">Nature Reviews Neurology</span>
-             </div>
-             <a href="https://www.nature.com/articles/s41582-025-00458-5" target="_blank" rel="noopener noreferrer" style="font-size:14px;font-weight:600;color:#1e293b;text-decoration:none;display:block;line-height:1.4;">Physical activity could protect against cognitive decline</a>
-             
-           </div>
-           <div style="padding:12px 20px;border-bottom:1px solid #f1f5f9;">
-             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-               <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:2px 6px;border-radius:4px;background:#0d948820;color:#0d9488;">Nature Reviews Neurology</span>
-             </div>
-             <a href="https://www.nature.com/articles/s41582-025-00459-4" target="_blank" rel="noopener noreferrer" style="font-size:14px;font-weight:600;color:#1e293b;text-decoration:none;display:block;line-height:1.4;">Microglial phagocytosis in Alzheimer disease</a>
-             
-           </div>
-           <div style="padding:12px 20px;border-bottom:1px solid #f1f5f9;">
-             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-               <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:2px 6px;border-radius:4px;background:#0d948820;color:#0d9488;">Nature Reviews Neurology</span>
-             </div>
-             <a href="https://www.nature.com/articles/s41582-025-00456-7" target="_blank" rel="noopener noreferrer" style="font-size:14px;font-weight:600;color:#1e293b;text-decoration:none;display:block;line-height:1.4;">Addressing multiple sclerosis disparities in Latin American and other populations</a>
-             
-           </div>
-           <div style="padding:12px 20px;border-bottom:1px solid #f1f5f9;">
-             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-               <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:2px 6px;border-radius:4px;background:#0d948820;color:#0d9488;">Stroke &amp; Vascular Neurology</span>
-             </div>
-             <a href="https://ajnr-stage2.highwire.org/content/ajnr/44/10/1191.full.pdf" target="_blank" rel="noopener noreferrer" style="font-size:14px;font-weight:600;color:#1e293b;text-decoration:none;display:block;line-height:1.4;">MR Imaging Protocol</a>
-             <p style="font-size:12px;color:#64748b;margin:4px 0 0;line-height:1.5;">This study investigates the use of U-Net models for predicting fetal brain MR imaging landmarks, aiming to assist radiologists in selecting optimal image series and performing anatomical measurements more efficiently.</p>
-           </div>
-           <div style="padding:12px 20px;border-bottom:1px solid #f1f5f9;">
-             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-               <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:2px 6px;border-radius:4px;background:#0d948820;color:#0d9488;">Stroke &amp; Vascular Neurology</span>
-             </div>
-             <a href="https://ajnr-stage2.highwire.org/content/ajnr/41/11/2166.full.pdf" target="_blank" rel="noopener noreferrer" style="font-size:14px;font-weight:600;color:#1e293b;text-decoration:none;display:block;line-height:1.4;">Radiographic Features</a>
-             <p style="font-size:12px;color:#64748b;margin:4px 0 0;line-height:1.5;">This research explores the radiological differentiation between cauda equina arteriovenous fistulas (AVFs) and filum terminale AVFs, emphasizing the importance of combining arterial and venous features for accurate diagnosis.</p>
-           </div>
-           </div>
-         </div></div>
-<div style="padding:24px;"><div style="border-radius:12px;border:1px solid #e2e8f0;background:white;overflow:hidden;">
-          <div data-action="toggle-block" data-target="pt_cw08hgp2e" style="background:linear-gradient(135deg,#1e293b,#0d9488);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <span style="font-size:18px;">💡</span>
-              <span style="color:white;font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;">Prompting Tips</span>
-            </div>
-            <span id="pt_cw08hgp2e_arrow" style="color:rgba(255,255,255,0.7);font-size:12px;">▼ click to expand</span>
-          </div>
-          <div id="pt_cw08hgp2e" style="display:none;" data-collapsible><div style="padding:20px 24px;display:flex;flex-direction:column;gap:16px;">
-            <div>
-              <h3 style="font-size:20px;font-weight:800;margin:0 0 8px;color:#1e293b;">Be Specific and Provide Context</h3>
-              <p style="font-size:14px;color:#475569;line-height:1.7;margin:0;">The more context and specific detail you give an AI model, the better it can tailor its response to your needs. Vague prompts produce generic, often unhelpful answers.</p>
-            </div>
-            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:14px 16px;">
-              <p style="font-size:11px;font-weight:700;text-transform:uppercase;color:#dc2626;margin:0 0 8px;">❌ Bad Example</p>
-              <code style="font-size:13px;color:#7f1d1d;display:block;line-height:1.6;white-space:pre-wrap;font-family:monospace;">Tell me about sepsis.</code>
-              <p style="font-size:12px;color:#b91c1c;margin-top:8px;font-style:italic;">Too vague — the AI doesn't know your role, purpose, or desired output format.</p>
-            </div>
-            <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:14px 16px;">
-              <p style="font-size:11px;font-weight:700;text-transform:uppercase;color:#16a34a;margin:0 0 8px;">✅ Good Example</p>
-              <code style="font-size:13px;color:#14532d;display:block;line-height:1.6;white-space:pre-wrap;font-family:monospace;">Act as a critical care physician. Provide a concise summary of the Surviving Sepsis Campaign 2024 key bundle elements for a nursing education handout. Use bullet points. Keep it under 300 words.</code>
-              <p style="font-size:12px;color:#15803d;margin-top:8px;font-style:italic;">Specifies role, context, format, audience, and length — leading to a much more useful response.</p>
-            </div>
-            <div style="background:#eff6ff;border-left:4px solid #0d9488;padding:12px 16px;border-radius:0 8px 8px 0;"><p style="font-size:11px;font-weight:700;text-transform:uppercase;color:#0d9488;margin:0 0 4px;">Key Takeaway</p><p style="font-size:13px;color:#1e40af;margin:0;">Treat AI prompting like writing a clinical order: be precise, include context, and specify your expected output.</p></div>
-          </div></div>
-        </div></div>
-<div style="padding:24px;"><div style="border-radius:12px;border:1px solid #e2e8f0;background:white;overflow:hidden;">
-          <div data-action="toggle-block" data-target="sbarp_9y7mppxnw" style="background:#1e293b;padding:14px 20px;cursor:pointer;display:flex;align-items:flex-start;justify-content:space-between;">
-            <div>
-              <p style="color:rgba(255,255,255,0.8);font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;margin:0 0 4px;">🏥 Clinical AI Prompting</p>
-              <h3 style="color:white;font-size:20px;font-weight:800;margin:0;">The SBARP Framework</h3>
-              <p style="color:rgba(255,255,255,0.75);font-size:13px;margin:4px 0 0;">A structured approach to clinical AI prompting</p>
-            </div>
-            <span id="sbarp_9y7mppxnw_arrow" style="color:rgba(255,255,255,0.7);font-size:12px;margin-top:4px;">▼ click to expand</span>
-          </div>
-          <div id="sbarp_9y7mppxnw" style="display:none;" data-collapsible>
-          <div style="padding:16px 24px 0;font-size:14px;color:#475569;line-height:1.7;">SBARP is a framework adapted from clinical communication tools to help healthcare professionals craft effective, safe, and context-rich prompts for AI models.</div>
-          <div style="padding:16px 24px;display:flex;flex-direction:column;gap:12px;">
-            <div style="display:flex;gap:14px;align-items:flex-start;background:#eff6ff;border-radius:10px;padding:14px 16px;">
-              <div style="width:36px;height:36px;border-radius:10px;background:#3b82f6;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <span style="color:white;font-weight:900;font-size:18px;">S</span>
-              </div>
-              <div>
-                <p style="font-weight:700;font-size:13px;color:#3b82f6;margin:0 0 4px;text-transform:uppercase;">Situation</p>
-                <p style="font-size:13px;color:#334155;margin:0;line-height:1.6;">I am working in the ICU and have a 68-year-old patient with acute respiratory failure.</p>
-              </div>
-            </div><div style="display:flex;gap:14px;align-items:flex-start;background:#f5f3ff;border-radius:10px;padding:14px 16px;">
-              <div style="width:36px;height:36px;border-radius:10px;background:#8b5cf6;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <span style="color:white;font-weight:900;font-size:18px;">B</span>
-              </div>
-              <div>
-                <p style="font-weight:700;font-size:13px;color:#8b5cf6;margin:0 0 4px;text-transform:uppercase;">Background</p>
-                <p style="font-size:13px;color:#334155;margin:0;line-height:1.6;">Patient has a history of COPD, type 2 diabetes, and CKD stage 3. Currently on 40% FiO2 with an oxygen saturation of 91%.</p>
-              </div>
-            </div><div style="display:flex;gap:14px;align-items:flex-start;background:#f0fdf4;border-radius:10px;padding:14px 16px;">
-              <div style="width:36px;height:36px;border-radius:10px;background:#10b981;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <span style="color:white;font-weight:900;font-size:18px;">A</span>
-              </div>
-              <div>
-                <p style="font-weight:700;font-size:13px;color:#10b981;margin:0 0 4px;text-transform:uppercase;">Ask</p>
-                <p style="font-size:13px;color:#334155;margin:0;line-height:1.6;">Summarize the current evidence-based weaning criteria for mechanical ventilation in COPD patients.</p>
-              </div>
-            </div><div style="display:flex;gap:14px;align-items:flex-start;background:#fffbeb;border-radius:10px;padding:14px 16px;">
-              <div style="width:36px;height:36px;border-radius:10px;background:#f59e0b;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <span style="color:white;font-weight:900;font-size:18px;">R</span>
-              </div>
-              <div>
-                <p style="font-weight:700;font-size:13px;color:#f59e0b;margin:0 0 4px;text-transform:uppercase;">Role</p>
-                <p style="font-size:13px;color:#334155;margin:0;line-height:1.6;">Act as a critical care pulmonologist with expertise in ventilator management.</p>
-              </div>
-            </div><div style="display:flex;gap:14px;align-items:flex-start;background:#fef2f2;border-radius:10px;padding:14px 16px;">
-              <div style="width:36px;height:36px;border-radius:10px;background:#ef4444;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <span style="color:white;font-weight:900;font-size:18px;">P</span>
-              </div>
-              <div>
-                <p style="font-weight:700;font-size:13px;color:#ef4444;margin:0 0 4px;text-transform:uppercase;">Parameters</p>
-                <p style="font-size:13px;color:#334155;margin:0;line-height:1.6;">Provide a structured bullet-point summary. Limit to 300 words. Focus on 2024 guidelines. Exclude pediatric data.</p>
-              </div>
-            </div>
-          </div>
-          <div style="margin:0 24px 24px;background:#f8fafc;border-radius:10px;padding:16px;"><p style="font-size:11px;font-weight:700;text-transform:uppercase;color:#1e293b;margin:0 0 8px;">📋 Full Prompt Example</p><code style="font-size:12px;color:#334155;white-space:pre-wrap;line-height:1.7;display:block;font-family:monospace;">Act as a critical care pulmonologist with expertise in ventilator management.
+  <div style="padding:24px;background-color:#ffffff;">
+    <section class="nap-opening" style="width:100%; border:1px solid rgba(0,0,0,.08); border-radius:16px; padding:28px 26px; background: linear-gradient(135deg, rgba(45,125,255,.10), rgba(142,61,255,.10)); position:relative; overflow:hidden;">
+      <p style="font-size:12px; letter-spacing:.12em; text-transform:uppercase; opacity:.75; margin-bottom:6px;">Mission & Welcome</p>
+      <h2 style="font-size:28px; line-height:1.15; margin-bottom:12px;">The Neurology AI Pulse</h2>
+      <p style="font-size:16px; line-height:1.65; opacity:.95;">
+        As we continue to navigate the rapid evolution of AI in medicine, we created <strong>The Neurology AI Pulse</strong> to provide a direct bridge between technical innovation and clinical practice. Our mission is to translate high-dimensional data and complex algorithms into actionable insights for the SIUH community and the broader neuroscientific field.
+      </p>
+    </section>
+  </div>
 
-Situation: I am working in the ICU with a 68-year-old patient with acute respiratory failure.
-Background: History of COPD, T2DM, CKD stage 3. Currently on 40% FiO2, SpO2 91%.
-Ask: Summarize current evidence-based weaning criteria for mechanical ventilation in COPD patients.
-Parameters: Bullet-point format, max 300 words, 2024 guidelines, adult patients only.</code></div>
-          </div>
-        </div></div><hr style="border:none;border-top:1px solid #e2e8f0;margin:0;" />
-<div style="padding:24px;"><div style="border-radius:12px;border:2px solid #fca5a5;background:white;overflow:hidden;">
-          <div style="background:linear-gradient(135deg,#dc2626,#b91c1c);padding:14px 20px;display:flex;align-items:center;gap:10px;">
-            <span style="font-size:20px;">🛡️</span>
-            <div>
-              <p style="color:white;font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;margin:0;">AI Safety Reminders</p>
-              <h3 style="color:white;font-weight:800;font-size:16px;margin:2px 0 0;">Clinical AI Safety — This Month's Reminders</h3>
-            </div>
-          </div>
-          <div style="padding:16px 24px 0;font-size:14px;color:#475569;line-height:1.7;">As AI tools become more integrated into clinical workflows, these safety principles help protect patients and practitioners.</div>
-          <div style="padding:16px 24px;display:flex;flex-direction:column;gap:10px;">
-            <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#fef2f2;border-radius:10px;border-left:4px solid #dc2626;">
-              <span style="font-size:18px;flex-shrink:0;margin-top:1px;">🔍</span>
-              <div><p style="font-weight:700;font-size:13px;color:#991b1b;margin:0 0 3px;">Always Verify</p><p style="font-size:13px;color:#334155;margin:0;line-height:1.6;">AI-generated clinical summaries, drug dosages, and recommendations must be verified against authoritative sources before acting on them.</p></div>
-            </div><div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#fef2f2;border-radius:10px;border-left:4px solid #dc2626;">
-              <span style="font-size:18px;flex-shrink:0;margin-top:1px;">🔒</span>
-              <div><p style="font-weight:700;font-size:13px;color:#991b1b;margin:0 0 3px;">Protect PHI</p><p style="font-size:13px;color:#334155;margin:0;line-height:1.6;">Never enter identifiable patient information (name, DOB, MRN) into public AI tools. Use de-identified data or institution-approved platforms.</p></div>
-            </div><div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#fef2f2;border-radius:10px;border-left:4px solid #dc2626;">
-              <span style="font-size:18px;flex-shrink:0;margin-top:1px;">⚖️</span>
-              <div><p style="font-weight:700;font-size:13px;color:#991b1b;margin:0 0 3px;">You Are Accountable</p><p style="font-size:13px;color:#334155;margin:0;line-height:1.6;">AI is a decision-support tool. The clinician remains fully responsible for all clinical decisions, even those informed by AI output.</p></div>
-            </div><div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#fef2f2;border-radius:10px;border-left:4px solid #dc2626;">
-              <span style="font-size:18px;flex-shrink:0;margin-top:1px;">🚨</span>
-              <div><p style="font-weight:700;font-size:13px;color:#991b1b;margin:0 0 3px;">Report Errors</p><p style="font-size:13px;color:#334155;margin:0;line-height:1.6;">If you notice an AI tool providing dangerous or clearly incorrect clinical information, report it to your informatics or patient safety team.</p></div>
-            </div>
-          </div>
-          <div style="padding:0 24px 20px;"><p style="font-size:12px;color:#b91c1c;font-style:italic;background:#fff5f5;padding:10px 14px;border-radius:8px;margin:0;">When in doubt, don't act on AI output alone. Clinical judgment always takes precedence.</p></div>
-        </div></div>
-<div style="padding:24px;"><div style="border-radius:12px;border:2px solid #0d9488;overflow:hidden;">
-          <div style="background:#0d9488;padding:10px 20px;display:flex;align-items:center;gap:10px;">
-            <span style="font-size:20px;">🧠</span>
-            <span style="color:white;font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;">AI Term of the Week</span>
-          </div>
-          <div style="background:white;padding:20px 24px;">
-            <h3 style="font-size:22px;font-weight:800;margin:0 0 6px;color:#1e293b;">Hallucination</h3>
-            <p style="font-size:12px;color:#94a3b8;font-style:italic;margin:0 0 12px;">/hə-loo-sə-NAY-shən/</p>
-            <p style="font-size:14px;line-height:1.7;color:#334155;margin:0 0 14px;">When an AI model generates text that is factually incorrect, fabricated, or not supported by its training data, but presents it confidently as true.</p>
-            <div style="background:#f8f4ff;border-left:4px solid #0d9488;padding:12px 16px;border-radius:0 8px 8px 0;">
-              <p style="font-size:11px;font-weight:700;text-transform:uppercase;color:#0d9488;margin:0 0 4px;">Example in Practice</p>
-              <p style="font-size:13px;color:#475569;margin:0;font-style:italic;">An AI asked to summarize a patient record confidently includes a medication that was never prescribed.</p>
-            </div>
-            <p style="font-size:13px;color:#64748b;margin:12px 0 0;padding:10px;background:#f1f5f9;border-radius:8px;"><strong>Why it matters:</strong> Understanding hallucination helps clinicians maintain appropriate skepticism and always verify AI-generated content.</p>
-          </div>
-        </div></div><hr style="border:none;border-top:1px solid #e2e8f0;margin:0;" />
-<div style="padding:24px;"><div style="border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;background:white;">
-          <div style="background:#1e293b;padding:10px 20px;display:flex;align-items:center;gap:10px;">
-            <span style="font-size:18px;">📜</span>
-            <span style="color:white;font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;">AI History</span>
-            <span style="margin-left:auto;color:rgba(255,255,255,0.7);font-family:monospace;font-size:13px;">1950</span>
-          </div>
-          <div style="padding:20px 24px;">
-            <h3 style="font-size:20px;font-weight:800;margin:0 0 12px;color:#1e293b;">The Turing Test</h3>
-            
-            <div style="font-size:14px;line-height:1.8;color:#334155;"><p>Alan Turing proposed the "imitation game" — a test of a machine's ability to exhibit intelligent behavior indistinguishable from a human. This foundational concept laid the groundwork for artificial intelligence as a discipline.</p></div>
-            <div style="margin-top:16px;padding:12px 16px;background:#f8fafc;border-radius:8px;border-left:4px solid #1e293b;"><p style="font-size:11px;font-weight:700;text-transform:uppercase;color:#1e293b;margin:0 0 4px;">Historical Impact</p><p style="font-size:13px;color:#475569;margin:0;">The Turing Test sparked decades of philosophical and technical debate about machine intelligence, consciousness, and the benchmarks we use to evaluate AI.</p></div>
-            <p style="font-size:11px;color:#94a3b8;margin-top:14px;">Source: <a href="https://courses.cs.umbc.edu/471/papers/turing.pdf" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Turing, A.M. (1950). Computing Machinery and Intelligence.</a></p>
-          </div>
-        </div></div><hr style="border:none;border-top:1px solid #e2e8f0;margin:0;" />
-<div style="padding:24px;"><div style="border-radius:12px;border:2px dashed #fde68a;background:#fffbeb;padding:20px 24px;">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-            <span style="font-size:24px;">😄</span>
-            <span style="font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#0d9488;">AI Humor</span>
-          </div>
-          <h3 style="font-size:18px;font-weight:700;color:#92400e;margin:0 0 12px;">AI in the Clinic</h3>
-          <img src="https://base44.app/api/apps/69a0a4561f507b9f85240086/files/public/69a0a4561f507b9f85240086/9580ea255_DB781ED7-C66F-42CF-9E8C-F701C10BEE00.png" alt="" style="width:100%;border-radius:8px;margin-bottom:14px;display:block;object-fit:contain;" />
-          <div style="background:white;border-radius:10px;padding:14px 18px;margin-bottom:12px;font-style:italic;font-size:15px;color:#334155;line-height:1.7;">Therapist neuron:<br>And how have you been feeling lately?</div>
-          <p style="font-weight:700;font-size:16px;color:#b45309;margin:0 0 10px;">Patient neuron: I’m just not firing like I used to.</p>
-          
-        </div></div><hr style="border:none;border-top:1px solid #e2e8f0;margin:0;" />
-<div style="padding:24px;"><div style="background:#1e293b;color:#ffffff;padding:32px 24px;text-align:center;border-radius:0 0 12px 12px;">
-          <p style="font-weight:700;font-size:14px;margin:0;">The Neurology AI Pulse</p>
-          <p style="font-size:12px;opacity:0.7;margin:4px 0 0;">Staten Island University Hospital</p>
-          <p style="font-size:12px;opacity:0.7;margin:4px 0 0;">Yasir El-Sherif MD PhD &amp; Jai Shahni MD</p>
-          <a href="mailto:yelsherif@northwell.edu?subject=Contact%20Us%3A%20The%20Neurology%20AI%20Pulse%20%E2%80%94%20Issue%20001" style="font-size:13px;color:#ffffff;opacity:0.9;text-decoration:none;display:inline-block;margin-top:12px;padding:6px 18px;border:1px solid rgba(255,255,255,0.4);border-radius:6px;font-weight:600;">✉ Contact Us</a>
-          
-          
-          <p style="font-size:10px;opacity:0.45;margin:14px auto 0;max-width:440px;line-height:1.6;">This newsletter is for educational purposes only and does not constitute medical advice.</p>
-          <p style="font-size:10px;opacity:0.35;margin:10px 0 0;">© 2026 Staten Island University Hospital</p>
-        </div></div>
+  <div style="padding:24px;background-color:#ffffff;">
+    <div style="border:1px solid #e2e8f0;border-radius:12px;padding:24px;background:white;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <span style="color:#f59e0b;">✦</span>
+        <span style="font-size:10px;font-family:monospace;letter-spacing:1px;text-transform:uppercase;color:#94a3b8;">Spotlight · Neurology / Education 2026</span>
+      </div>
+      <h3 style="font-size:24px;font-weight:700;margin:0 0 12px;color:#1e293b;">Bridging the Artificial Intelligence Training Gap</h3>
+      <p style="font-size:14px;color:#475569;margin:0 0 16px;line-height:1.7;">Nearly 80% of neurology residents report they have received no integrated training on AI as part of their curriculum. There is a strong appetite for learning: more than 90% of respondents are eager for structured AI education.</p>
+      <div style="border-left:3px solid #0d9488;padding-left:16px;"><p style="font-size:14px;font-style:italic;color:#0d9488;margin:0;">AI is already here; training is not.</p></div>
+    </div>
+  </div>
+
+  <div style="padding:24px;background-color:#ffffff;">
+    <h3 style="font-size:20px;font-weight:700;margin:0 0 16px;color:#1e293b;">Featured Articles</h3>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;">
+      <div style="border:1px solid #e2e8f0;border-radius:12px;padding:20px;background:white;">
+        <span style="font-size:10px;font-family:monospace;text-transform:uppercase;color:#94a3b8;">Stroke Jan. 2026</span>
+        <h4 style="font-size:16px;font-weight:700;margin:8px 0;color:#1e293b;">AI and Novel Trial Designs for Acute Ischemic Stroke</h4>
+        <p style="font-size:13px;color:#475569;margin-bottom:12px;">Review on how platform and adaptive trials can accelerate stroke research.</p>
+      </div>
+      <div style="border:1px solid #e2e8f0;border-radius:12px;padding:20px;background:white;">
+        <span style="font-size:10px;font-family:monospace;text-transform:uppercase;color:#94a3b8;">Nature Scientific Data 2026</span>
+        <h4 style="font-size:16px;font-weight:700;margin:8px 0;color:#1e293b;">An EEG Dataset for Visual Imagery–Based BCI</h4>
+        <p style="font-size:13px;color:#475569;margin-bottom:12px;">A new 32-channel EEG dataset addressing limitations in BCI motor research.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:24px;background-color:#01c7fc;">
+    <h3 style="font-size:20px;font-weight:700;margin:0 0 16px;color:#1e293b;">Department News</h3>
+    <div style="background:white;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;display:flex;">
+      <div style="flex-shrink:0;width:140px;background:#f8fafc;"><img src="https://dam.northwell.edu/asset/6d590c76-58bd-4300-b233-dd0166af0b56/Drupal/Vo-Koppel-2025-jpg.jpg" style="width:100%;height:100%;object-fit:contain;"></div>
+      <div style="padding:14px;flex:1;">
+        <span style="font-size:10px;font-weight:700;color:#0d9488;">Northwell Health</span>
+        <h4 style="font-size:15px;margin:5px 0;">AI identifies brain network predictive of psychosis in Alzheimer’s</h4>
+        <a href="#" style="font-size:12px;color:#1e293b;font-weight:600;text-decoration:none;">Read more →</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:24px;">
+    <div style="border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;background:white;">
+      <div style="padding:12px 20px;background:#1e293b;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="color:white;opacity:0.8;">📡</span>
+          <span style="color:white;font-weight:700;font-size:14px;">Latest Journal Updates</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input type="number" id="rss_limit" value="5" min="1" max="15" style="width:45px; border-radius:4px; border:none; padding:4px; font-size:12px;" title="Articles per feed">
+          <button id="rss_refresh_btn" style="background:#0d9488;color:white;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;">↻ Refresh</button>
+        </div>
+      </div>
+      
+      <div id="rss_collapsible_content">
+        <div id="rss_container" style="padding:0;">
+          <p style="padding:20px; color:#64748b; font-size:13px; text-align:center;">Click refresh to load live journal data via proxy.</p>
+        </div>
+      </div>
+
+      <div style="background:#f8fafc; border-top:1px solid #e2e8f0; text-align:center; padding:8px;">
+        <button id="rss_toggle_btn" style="background:none; border:none; color:#64748b; font-size:11px; font-weight:700; cursor:pointer; letter-spacing:1px;">▲ COLLAPSE NEWS</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:24px;">
+    <div style="border-radius:12px;border:1px solid #e2e8f0;background:white;overflow:hidden;">
+      <div class="toggle-header" data-target="prompting_tips_box" style="background:linear-gradient(135deg,#1e293b,#0d9488);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:18px;">💡</span>
+          <span style="color:white;font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;">Prompting Tips</span>
+        </div>
+        <span class="arrow" style="color:white;font-size:12px;">▼ click to expand</span>
+      </div>
+      <div id="prompting_tips_box" style="display:none; padding:20px 24px;">
+        <h3 style="margin-bottom:8px;">Be Specific and Provide Context</h3>
+        <p style="font-size:14px; line-height:1.7; color:#475569;">Treat AI prompting like writing a clinical order: be precise.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:24px;">
+    <div style="border-radius:12px;border:1px solid #e2e8f0;background:white;overflow:hidden;">
+      <div class="toggle-header" data-target="sbarp_box" style="background:#1e293b;padding:14px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <p style="color:rgba(255,255,255,0.8);font-size:11px;font-weight:700;text-transform:uppercase;margin:0;">🏥 Clinical AI Prompting</p>
+          <h3 style="color:white;font-size:20px;margin:0;">The SBARP Framework</h3>
+        </div>
+        <span class="arrow" style="color:white;font-size:12px;">▼ click to expand</span>
+      </div>
+      <div id="sbarp_box" style="display:none; padding:20px 24px;">
+        <p style="font-size:14px; color:#475569;">SBARP: Situation, Background, Ask, Role, Parameters.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:24px;">
+    <div style="border-radius:12px;border:2px solid #fca5a5;background:white;overflow:hidden;">
+      <div style="background:linear-gradient(135deg,#dc2626,#b91c1c);padding:14px 20px;color:white;">
+        <p style="font-size:11px;font-weight:700;text-transform:uppercase;margin:0;">🛡️ AI Safety Reminders</p>
+        <h3 style="margin:2px 0 0;">Clinical AI Safety</h3>
+      </div>
+      <div style="padding:20px 24px;">
+        <p style="font-size:14px; line-height:1.6;">Never enter identifiable patient information (PHI) into public AI tools.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:24px;">
+    <div style="border-radius:12px;border:2px dashed #fde68a;background:#fffbeb;padding:20px 24px;">
+      <span style="font-weight:700;font-size:11px;text-transform:uppercase;color:#0d9488;">😄 AI Humor</span>
+      <p style="margin-top:12px; font-style:italic;">"I’m just not firing like I used to." — The patient neuron.</p>
+    </div>
+  </div>
+
+  <div style="padding:24px;">
+    <div style="background:#1e293b;color:#ffffff;padding:32px 24px;text-align:center;border-radius:0 0 12px 12px;">
+      <p style="font-weight:700;font-size:14px;margin:0;">The Neurology AI Pulse</p>
+      <p style="font-size:12px;opacity:0.7;margin:4px 0 0;">Staten Island University Hospital</p>
+      <p style="font-size:10px;opacity:0.45;margin:14px auto 0;max-width:440px;line-height:1.6;">This newsletter is for educational purposes only and does not constitute medical advice.</p>
+      <p style="font-size:10px;opacity:0.35;margin:10px 0 0;">© 2026 Staten Island University Hospital</p>
+    </div>
+  </div>
+
 </div>
 </div>
+
 <script>
-var NL_DEBUG = (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('debug') === '1');
-
 document.addEventListener('DOMContentLoaded', function() {
-  if (NL_DEBUG) console.log('[NL] Export script loaded');
+  // --- RSS LOGIC ---
+  const refreshBtn = document.getElementById('rss_refresh_btn');
+  const rssContainer = document.getElementById('rss_container');
+  const rssCollapsible = document.getElementById('rss_collapsible_content');
+  const rssToggle = document.getElementById('rss_toggle_btn');
+  const limitInput = document.getElementById('rss_limit');
 
-  function toggleBlock(id) {
-    var el = document.getElementById(id);
-    var arrow = document.getElementById(id + '_arrow');
-    if (!el) { if (NL_DEBUG) console.log('[NL] toggleBlock: element not found', id); return; }
-    var opening = el.style.display === 'none' || el.style.display === '';
-    el.style.display = opening ? 'block' : 'none';
-    if (arrow) arrow.textContent = opening ? '\u25b2 collapse' : '\u25bc click to expand';
-    if (NL_DEBUG) console.log('[NL] toggleBlock', id, 'opening=' + opening);
-  }
+  const feeds = [
+    { label: "Nature Reviews Neurology", url: "https://www.nature.com/nrneurol/current_issue/rss" },
+    { label: "Stroke & Vascular Neurology", url: "https://svn.bmj.com/rss/current.xml" }
+  ];
 
-  function copyPrompt(id, btnId) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    var text = el.textContent || el.innerText;
-    navigator.clipboard.writeText(text).then(function() {
-      var btn = document.getElementById(btnId);
-      if (btn) { var orig = btn.textContent; btn.textContent = '\u2713 Copied!'; setTimeout(function() { btn.textContent = orig; }, 2000); }
-    }).catch(function() {
-      var ta = document.createElement('textarea');
-      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
-      document.body.removeChild(ta);
-      var btn = document.getElementById(btnId);
-      if (btn) { var orig = btn.textContent; btn.textContent = '\u2713 Copied!'; setTimeout(function() { btn.textContent = orig; }, 2000); }
-    });
-  }
+  async function fetchRSS() {
+    refreshBtn.disabled = true;
+    refreshBtn.textContent = '...';
+    rssContainer.innerHTML = '<p style="padding:20px; text-align:center;">Fetching journals...</p>';
+    
+    const limit = parseInt(limitInput.value) || 5;
+    let htmlOutput = '';
 
-  function togglePrompt(id, btnId) {
-     var el = document.getElementById(id);
-     var btn = document.getElementById(btnId);
-     if (!el) return;
-     var exp = el.dataset.expanded === 'true';
-     el.dataset.expanded = exp ? 'false' : 'true';
-     if (!exp) {
-       el.style.maxHeight = 'none'; el.style.webkitMaskImage = 'none'; el.style.maskImage = 'none';
-       if (btn) btn.textContent = '\u25b2 Collapse';
-     } else {
-       el.style.maxHeight = '80px'; el.style.webkitMaskImage = 'linear-gradient(black 50%,transparent)'; el.style.maskImage = 'linear-gradient(black 50%,transparent)';
-       if (btn) btn.textContent = '\u25bc Expand Preview';
-     }
-   }
+    for (const feed of feeds) {
+      try {
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(feed.url)}`;
+        const response = await fetch(proxyUrl);
+        const data = await response.json();
+        const xml = new DOMParser().parseFromString(data.contents, "text/xml");
+        const items = Array.from(xml.querySelectorAll("item")).slice(0, limit);
 
-  function refreshRss(btnEl) {
-    if (NL_DEBUG) console.log('[NL] Refresh RSS clicked');
-    
-    if (window.location.protocol === 'file:') {
-      alert('Refresh only works when the HTML is opened on a web server. To use refresh, upload this exported HTML to a hosting service or run it through a local server.');
-      return;
-    }
-    
-    btnEl.disabled = true;
-    var origText = btnEl.textContent;
-    btnEl.textContent = '↻ Refreshing...';
-    
-    var feeds = JSON.parse(btnEl.getAttribute('data-feeds') || '[]');
-    var filters = JSON.parse(btnEl.getAttribute('data-filters') || '[]');
-    var perFeed = parseInt(btnEl.getAttribute('data-per-feed')) || 5;
-    var total = parseInt(btnEl.getAttribute('data-total')) || 20;
-    
-    if (!feeds || feeds.length === 0) {
-      btnEl.textContent = '❌ No feeds configured';
-      setTimeout(function() { btnEl.textContent = origText; btnEl.disabled = false; }, 2000);
-      return;
-    }
-    
-    var payload = { feeds: feeds, keywordFilters: filters, perFeedLimit: perFeed, totalLimit: total };
-    
-    fetch('/api/functions/refreshAdminRssFeeds', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-    .then(function(res) { return res.json(); })
-    .then(function(data) {
-      if (data.articles && Array.isArray(data.articles)) {
-        var targetId = btnEl.getAttribute('data-target');
-        var targetEl = document.getElementById(targetId);
-        if (targetEl) {
-          localStorage.setItem('rss_articles_' + targetId, JSON.stringify(data.articles));
-          location.reload();
-        }
-      } else {
-        btnEl.textContent = '❌ Failed to fetch';
-        setTimeout(function() { btnEl.textContent = origText; btnEl.disabled = false; }, 2000);
+        items.forEach(item => {
+          const title = item.querySelector("title").textContent;
+          const link = item.querySelector("link").textContent;
+          htmlOutput += `
+            <div style="padding:12px 20px; border-bottom:1px solid #f1f5f9;" class="rss-item">
+              <span style="font-size:9px; font-weight:800; color:#0d9488; text-transform:uppercase;">${feed.label}</span>
+              <a href="${link}" target="_blank" style="display:block; font-size:14px; font-weight:600; color:#1e293b; text-decoration:none; margin-top:4px;">${title}</a>
+            </div>`;
+        });
+      } catch (e) {
+        htmlOutput += `<p style="padding:10px; color:red;">Failed to load ${feed.label}</p>`;
       }
-    })
-    .catch(function(err) {
-      if (NL_DEBUG) console.log('[NL] Refresh error:', err);
-      btnEl.textContent = '❌ Error';
-      setTimeout(function() { btnEl.textContent = origText; btnEl.disabled = false; }, 2000);
-    });
+    }
+    rssContainer.innerHTML = htmlOutput || '<p style="padding:20px;">No articles found.</p>';
+    refreshBtn.disabled = false;
+    refreshBtn.textContent = '↻ Refresh';
   }
 
-  document.addEventListener('click', function(e) {
-     var target = e.target;
-     while (target && target !== document.body) {
-       var action = target.getAttribute('data-action');
-       if (action) {
-         e.preventDefault();
-         if (NL_DEBUG) console.log('[NL] click action:', action);
-         if (action === 'toggle-block') { toggleBlock(target.getAttribute('data-target')); return; }
-         if (action === 'copy-prompt') { copyPrompt(target.getAttribute('data-target'), target.id); return; }
-         if (action === 'toggle-prompt') { togglePrompt(target.getAttribute('data-target'), target.id); return; }
-         if (action === 'refresh-rss') { refreshRss(target); return; }
-       }
-       target = target.parentElement;
-     }
-   });
+  refreshBtn.addEventListener('click', fetchRSS);
+  
+  rssToggle.addEventListener('click', () => {
+    const isHidden = rssCollapsible.style.display === 'none';
+    rssCollapsible.style.display = isHidden ? 'block' : 'none';
+    rssToggle.textContent = isHidden ? '▲ COLLAPSE NEWS' : '▼ EXPAND NEWS';
+  });
 
-  if (NL_DEBUG) console.log('[NL] Event listeners attached');
+  // --- GENERAL COLLAPSIBLE LOGIC (SBARP, Tips) ---
+  document.querySelectorAll('.toggle-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const targetId = header.getAttribute('data-target');
+      const targetBox = document.getElementById(targetId);
+      const arrow = header.querySelector('.arrow');
+      const isHidden = targetBox.style.display === 'none';
+      
+      targetBox.style.display = isHidden ? 'block' : 'none';
+      arrow.textContent = isHidden ? '▲ collapse' : '▼ click to expand';
+    });
+  });
 });
-
-window.__NEWSLETTER_EXPORT_JS__ = true;
 </script>
 </body>
 </html>
