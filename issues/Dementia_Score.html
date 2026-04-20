@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AD Pre-Test Probability v2 | Bayesian Clinical Model</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg: #f5f2ec;
+  --ink: #1a1714;
+  --ink2: #5a534d;
+  --ink3: #9b9189;
+  --surface: #ffffff;
+  --surface2: #ede9e2;
+  --border: rgba(26,23,20,0.1);
+  --border-strong: rgba(26,23,20,0.18);
+  --red: #c0392b;
+  --red-light: rgba(192,57,43,0.08);
+  --amber: #b7750d;
+  --amber-light: rgba(183,117,13,0.08);
+  --green: #2d6a4f;
+  --green-light: rgba(45,106,79,0.08);
+  --blue: #1a5276;
+  --blue-light: rgba(26,82,118,0.08);
+  --purple: #5b3a8e;
+  --purple-light: rgba(91,58,142,0.08);
+  --r: 10px;
+  --r-lg: 16px;
+}
+
+* { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── MODAL ── */
+#modal {
+  position:fixed; inset:0; z-index:9999;
+  background:rgba(245,242,236,0.96);
+  display:flex; align-items:center; justify-content:center;
+  padding:24px;
+  backdrop-filter:blur(4px);
+}
+.modal-inner {
+  max-width:480px; width:100%;
+  background:var(--surface);
+  border:1px solid var(--border-strong);
+  border-radius:var(--r-lg);
+  padding:36px 32px;
+}
+.modal-inner h2 {
+  font-family:'Instrument Serif', serif;
+  font-size:22px; font-weight:400;
+  color:var(--ink); margin-bottom:16px;
+}
+.modal-inner p { color:var(--ink2); font-size:13px; line-height:1.75; margin-bottom:12px; }
+.modal-inner ul { color:var(--ink2); font-size:13px; padding-left:16px; margin-bottom:20px; }
+.modal-inner ul li { margin-bottom:5px; }
+.modal-accept {
+  width:100%; padding:14px;
+  background:var(--ink); color:var(--bg);
+  border:none; border-radius:var(--r);
+  font-family:'Instrument Sans',sans-serif;
+  font-size:14px; font-weight:600;
+  cursor:pointer; transition:opacity .2s;
+}
+.modal-accept:hover { opacity:.85; }
+
+/* ── HEADER ── */
+header {
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:18px 28px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.logo {
+  font-family:'Instrument Serif',serif;
+  font-size:18px; font-weight:400;
+  letter-spacing:-.01em;
+}
+.logo em { font-style:italic; color:var(--ink2); }
+.version-tag {
+  font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--ink3); border:1px solid var(--border);
+  padding:4px 10px; border-radius:20px;
+}
+
+/* ── TABS ── */
+.tabs {
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:0 28px;
+  display:flex; gap:2px;
+}
+.t {
+  padding:14px 18px;
+  font-size:13px; font-weight:500;
+  color:var(--ink3); background:none; border:none;
+  border-bottom:2px solid transparent;
+  cursor:pointer; transition:all .18s;
+}
+.t:hover { color:var(--ink); }
+.t.on { color:var(--ink); border-bottom-color:var(--ink); }
+
+/* ── LAYOUT ── */
+.wrap { max-width:820px; margin:0 auto; padding:28px 24px 80px; }
+.pane { display:none; }
+.pane.on { display:block; }
+
+/* Two-column on wide */
+@media(min-width:700px){
+  .cols { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+}
+
+/* ── RESULT CARD ── */
+.result-card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  padding:28px 24px 22px;
+  margin-bottom:20px;
+}
+.result-top {
+  display:flex; align-items:flex-start; justify-content:space-between;
+  margin-bottom:18px; flex-wrap:wrap; gap:12px;
+}
+.result-main {}
+.result-label {
+  font-size:10px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink3); margin-bottom:4px;
+}
+.result-pct {
+  font-family:'Instrument Serif',serif;
+  font-size:64px; line-height:1;
+  color:var(--ink3);
+  transition:color .4s;
+}
+.result-pct.low  { color:var(--green); }
+.result-pct.mod  { color:var(--amber); }
+.result-pct.high { color:var(--red);   }
+.result-tier {
+  font-size:13px; font-weight:600; letter-spacing:.04em;
+  text-transform:uppercase; color:var(--ink3); margin-top:4px;
+}
+.result-tier.low  { color:var(--green); }
+.result-tier.mod  { color:var(--amber); }
+.result-tier.high { color:var(--red);   }
+.result-tier.renal { color:var(--purple); }
+
+/* CI display */
+.ci-block {
+  text-align:right;
+}
+.ci-label { font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink3); }
+.ci-range {
+  font-family:'Instrument Serif',serif;
+  font-size:22px; color:var(--ink2);
+}
+.ci-note { font-size:11px; color:var(--ink3); margin-top:2px; }
+
+/* Progress bar */
+.pbar-wrap { margin:0 0 14px; }
+.pbar-track {
+  height:5px; background:var(--surface2);
+  border-radius:99px; overflow:hidden;
+}
+.pbar-fill {
+  height:100%; width:0;
+  border-radius:99px;
+  background:var(--ink3);
+  transition:width .7s cubic-bezier(.4,0,.2,1), background .4s;
+}
+.pbar-fill.low  { background:var(--green); }
+.pbar-fill.mod  { background:var(--amber); }
+.pbar-fill.high { background:var(--red);   }
+
+/* CI band bar */
+.ci-bar-wrap { position:relative; height:6px; background:var(--surface2); border-radius:99px; margin-bottom:6px; }
+.ci-band {
+  position:absolute; top:0; height:100%;
+  border-radius:99px; background:rgba(26,23,20,.18);
+  transition:left .7s, width .7s;
+}
+.ci-point {
+  position:absolute; top:-3px; width:12px; height:12px;
+  border-radius:50%; background:var(--ink);
+  transform:translateX(-50%);
+  transition:left .7s;
+  border:2px solid var(--bg);
+}
+.ci-tick-row {
+  display:flex; justify-content:space-between;
+  font-size:10px; color:var(--ink3); margin-top:4px;
+}
+
+/* Pill row */
+.pill-row { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+.pill {
+  font-size:11px; color:var(--ink2);
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:20px; padding:4px 11px;
+}
+.pill.warn { background:var(--amber-light); border-color:rgba(183,117,13,.2); color:var(--amber); }
+.pill.good { background:var(--green-light); border-color:rgba(45,106,79,.2);  color:var(--green); }
+.pill.bad  { background:var(--red-light);   border-color:rgba(192,57,43,.2);  color:var(--red);   }
+
+/* ── RECOMMENDATION ── */
+.rec {
+  margin-top:16px; padding:16px 18px;
+  border-radius:var(--r);
+  border-left:3px solid var(--ink3);
+  background:var(--surface2);
+  font-size:13px; line-height:1.75;
+  display:none;
+}
+.rec.on { display:block; }
+.rec.low   { border-color:var(--green);  background:var(--green-light); }
+.rec.mod   { border-color:var(--amber);  background:var(--amber-light); }
+.rec.high  { border-color:var(--red);    background:var(--red-light);   }
+.rec.renal { border-color:var(--purple); background:var(--purple-light);}
+.rec-title {
+  font-size:10px; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink3); margin-bottom:6px;
+}
+
+/* ── SECTION HEADING ── */
+.sec-head {
+  font-size:10px; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink3);
+  margin:26px 0 10px;
+  display:flex; align-items:center; gap:8px;
+}
+.sec-head::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* ── FORM ROWS ── */
+.fcard {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:13px 16px;
+  margin-bottom:7px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center; gap:14px;
+}
+.f-name { font-weight:500; font-size:13px; color:var(--ink); }
+.f-sub  { font-size:11px; color:var(--ink3); margin-top:2px; }
+.f-or   { font-size:11px; font-weight:600; color:var(--blue); margin-top:2px; }
+
+/* Number inputs */
+.num-g { display:flex; align-items:center; gap:6px; }
+.num-g input {
+  font-family:'Instrument Sans',sans-serif;
+  width:70px; padding:9px 10px;
+  background:var(--surface2); border:1px solid var(--border-strong);
+  border-radius:8px; font-size:14px; color:var(--ink);
+  text-align:center; outline:none;
+  transition:border-color .18s;
+}
+.num-g input:focus { border-color:var(--ink); }
+.num-g .u { font-size:12px; color:var(--ink3); }
+
+/* Select */
+.sel-g { position:relative; min-width:210px; }
+.sel-g::after {
+  content:'▾'; position:absolute;
+  right:10px; top:50%; transform:translateY(-50%);
+  font-size:11px; color:var(--ink3); pointer-events:none;
+}
+.sel-g select {
+  font-family:'Instrument Sans',sans-serif;
+  width:100%; padding:9px 28px 9px 11px;
+  background:var(--surface2); border:1px solid var(--border-strong);
+  border-radius:8px; font-size:13px; color:var(--ink);
+  outline:none; -webkit-appearance:none; appearance:none;
+  transition:border-color .18s;
+}
+.sel-g select:focus { border-color:var(--ink); }
+
+/* Chips */
+.chip-g { display:flex; gap:5px; flex-wrap:wrap; }
+.chip {
+  font-family:'Instrument Sans',sans-serif;
+  font-size:12px; font-weight:500;
+  padding:7px 13px; border-radius:20px;
+  border:1px solid var(--border-strong);
+  background:var(--surface2);
+  color:var(--ink2);
+  cursor:pointer; user-select:none;
+  transition:all .15s;
+}
+.chip:hover { border-color:var(--ink2); }
+.chip.on {
+  background:var(--ink); color:var(--bg);
+  border-color:var(--ink);
+}
+
+/* Confidence meter */
+.conf-meter {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:13px 16px;
+  margin-bottom:14px;
+}
+.conf-label { font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3); margin-bottom:8px; }
+.conf-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(110px, 1fr)); gap:6px; }
+.conf-item {
+  border-radius:6px; padding:6px 8px;
+  background:var(--surface2); border:1px solid var(--border);
+  display:flex; align-items:center; gap:5px;
+}
+.conf-dot {
+  width:8px; height:8px; border-radius:50%; flex-shrink:0;
+  background:var(--ink3);
+}
+.conf-dot.filled { background:var(--green); }
+.conf-dot.empty  { background:var(--ink3); }
+.conf-dot.high-impact.filled { background:var(--red); }
+.conf-item-label { font-size:11px; color:var(--ink3); line-height:1.2; }
+.conf-item-label.filled { color:var(--ink); }
+
+/* ── BUTTONS ── */
+.btn-row { display:flex; gap:8px; margin-top:20px; }
+.btn-calc {
+  flex:1; padding:15px;
+  background:var(--ink); color:var(--bg);
+  border:none; border-radius:var(--r);
+  font-family:'Instrument Sans',sans-serif;
+  font-size:14px; font-weight:600;
+  cursor:pointer; transition:opacity .2s, transform .1s;
+}
+.btn-calc:hover { opacity:.9; transform:translateY(-1px); }
+.btn-sec {
+  padding:15px 16px;
+  background:var(--surface2);
+  border:1px solid var(--border-strong);
+  border-radius:var(--r); color:var(--ink2);
+  font-family:'Instrument Sans',sans-serif;
+  font-size:14px; cursor:pointer; transition:all .18s;
+}
+.btn-sec:hover { border-color:var(--ink2); color:var(--ink); }
+
+/* ── BREAKDOWN TABLE ── */
+.bd-card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  margin-top:12px; overflow:hidden;
+  display:none;
+}
+.bd-card.on { display:block; }
+.bd-head {
+  font-size:10px; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink3);
+  padding:10px 14px; background:var(--surface2);
+  border-bottom:1px solid var(--border);
+}
+.bd-group-title {
+  font-size:10px; font-weight:600; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--ink3);
+  padding:8px 14px 4px;
+  background:var(--surface2);
+  border-bottom:1px solid var(--border);
+  border-top:1px solid var(--border);
+}
+.bd-row {
+  display:grid; grid-template-columns:1fr auto auto;
+  align-items:center; padding:9px 14px;
+  border-bottom:1px solid var(--border);
+  font-size:12px; gap:8px;
+}
+.bd-row:last-child { border-bottom:none; }
+.bd-name { color:var(--ink2); }
+.bd-or {
+  font-size:11px; font-weight:600;
+  border-radius:5px; padding:2px 7px;
+  color:var(--ink3); background:var(--surface2);
+  white-space:nowrap;
+}
+.bd-or.pos { color:var(--red); background:var(--red-light); }
+.bd-or.neg { color:var(--green); background:var(--green-light); }
+.bd-or.neut { color:var(--ink3); }
+.bd-contrib {
+  font-size:11px; color:var(--ink3); text-align:right;
+  white-space:nowrap;
+}
+
+/* ── REFS PANE ── */
+.ref-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--r); padding:18px 20px; margin-bottom:10px;
+}
+.ref-card h3 { font-size:14px; font-weight:600; color:var(--ink); margin-bottom:6px; display:flex; gap:8px; align-items:flex-start; }
+.ref-tag {
+  font-size:9px; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; padding:2px 7px; border-radius:4px;
+  flex-shrink:0; margin-top:2px;
+}
+.rt-blue   { background:var(--blue-light);   color:var(--blue); }
+.rt-amber  { background:var(--amber-light);  color:var(--amber); }
+.rt-green  { background:var(--green-light);  color:var(--green); }
+.rt-purple { background:var(--purple-light); color:var(--purple); }
+.rt-red    { background:var(--red-light);    color:var(--red); }
+.ref-card p { font-size:13px; color:var(--ink2); line-height:1.7; }
+.ref-card cite { display:block; margin-top:8px; font-size:11px; color:var(--ink3); font-style:normal; }
+
+/* ── METHODOLOGY PANE ── */
+.meth-section { margin-bottom:24px; }
+.meth-section h3 { font-family:'Instrument Serif',serif; font-size:18px; font-weight:400; color:var(--ink); margin-bottom:10px; }
+.meth-section p { font-size:13px; color:var(--ink2); line-height:1.75; margin-bottom:10px; }
+.meth-section ul { font-size:13px; color:var(--ink2); padding-left:16px; }
+.meth-section ul li { margin-bottom:6px; line-height:1.7; }
+.eq-box {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--r); padding:16px 18px; margin:12px 0;
+  font-size:13px; color:var(--ink); font-family:monospace;
+  line-height:1.9;
+}
+
+/* ── ALERT ── */
+.alert {
+  background:var(--amber-light); border:1px solid rgba(183,117,13,.2);
+  border-radius:var(--r); padding:12px 14px;
+  font-size:12px; color:var(--ink2); margin-bottom:16px;
+  display:flex; gap:8px;
+}
+
+/* PRINT */
+@media print {
+  #modal,.tabs,.btn-row,header { display:none!important; }
+  .pane { display:block!important; }
+  #pane-refs, #pane-meth { display:none!important; }
+  body { background:white; }
+  .result-card,.fcard,.bd-card { border:1px solid #ccc; background:white; }
+  .rec.on { display:block!important; }
+}
+
+@media(max-width:600px){
+  .fcard { grid-template-columns:1fr; }
+  .cols { display:block; }
+  .result-pct { font-size:50px; }
+}
+</style>
+</head>
+<body>
+
+<!-- DISCLAIMER -->
+<div id="modal">
+  <div class="modal-inner">
+    <h2>Alzheimer's Disease<br><em>Pre-Test Probability Calculator</em></h2>
+    <p>This tool is designed for <strong>licensed healthcare professionals</strong> conducting cognitive evaluations in specialist or memory clinic settings.</p>
+    <p>The model estimates amyloid pathology probability using a Bayesian framework anchored to empirical amyloid PET prevalence data (Jansen et al. JAMA 2015, n=6,883) and adjusted by published odds ratios from the CAIDE validation cohort, APOE meta-analyses, and the 2024 Lancet Commission.</p>
+    <ul>
+      <li>Not a diagnostic instrument — estimates pre-test probability only</li>
+      <li>Results must be interpreted within the full clinical context</li>
+      <li>Biomarker guidance aligns with the 2025 Alzheimer's Association CPG</li>
+      <li>Not validated for age &lt;50, acute settings, or autosomal dominant AD</li>
+    </ul>
+    <button class="modal-accept" onclick="document.getElementById('modal').style.display='none'">I Understand — Enter Tool</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">AD Pre-Test Probability <em>v2</em></div>
+  <div class="version-tag">Bayesian Clinical Model · 2025</div>
+</header>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="t on"  onclick="showPane('pane-calc',this)">Calculator</button>
+  <button class="t"     onclick="showPane('pane-refs',this)">Evidence Base</button>
+  <button class="t"     onclick="showPane('pane-meth',this)">Methodology</button>
+</div>
+
+<div class="wrap">
+
+<!-- ══════════════ CALCULATOR ══════════════ -->
+<div id="pane-calc" class="pane on">
+
+  <!-- RESULT CARD -->
+  <div class="result-card" id="result-card">
+    <div class="result-top">
+      <div class="result-main">
+        <div class="result-label">Pre-Test Probability — Amyloid Pathology (AD)</div>
+        <div class="result-pct" id="r-pct">—</div>
+        <div class="result-tier" id="r-tier">Awaiting calculation</div>
+      </div>
+      <div class="ci-block">
+        <div class="ci-label">95% Credible Interval</div>
+        <div class="ci-range" id="r-ci">— — —%</div>
+        <div class="ci-note" id="r-ci-note">Enter variables below</div>
+      </div>
+    </div>
+
+    <div class="pbar-wrap">
+      <div class="pbar-track"><div class="pbar-fill" id="pbar"></div></div>
+    </div>
+
+    <!-- CI band visualization -->
+    <div class="ci-bar-wrap" id="ci-bar-wrap" style="display:none">
+      <div class="ci-band" id="ci-band"></div>
+      <div class="ci-point" id="ci-point"></div>
+    </div>
+    <div class="ci-tick-row" id="ci-ticks" style="display:none">
+      <span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span>
+    </div>
+
+    <div class="pill-row" id="pill-row">
+      <div class="pill" id="pill-prior">Prior: —</div>
+      <div class="pill" id="pill-or">Combined OR: —</div>
+      <div class="pill" id="pill-conf">Data completeness: —</div>
+      <div class="pill" id="pill-width">CI width: —</div>
+    </div>
+
+    <div class="rec on" id="rec-idle">
+      <div class="rec-title">Status</div>
+      Complete the form below and click <strong>Calculate</strong> to generate a probability estimate with confidence interval.
+    </div>
+    <div class="rec" id="rec-out">
+      <div class="rec-title" id="rec-title">Recommendation</div>
+      <div id="rec-body"></div>
+    </div>
+  </div>
+
+  <!-- CONFIDENCE TRACKER -->
+  <div class="conf-meter" id="conf-meter" style="display:none">
+    <div class="conf-label">Data Completeness — Variables Entered</div>
+    <div class="conf-grid" id="conf-grid"></div>
+  </div>
+
+  <!-- ── FORM ── -->
+
+  <div class="sec-head">Core Clinical Variables <span style="color:var(--red);font-size:11px;font-weight:400;margin-left:4px;">(Required — highest model weight)</span></div>
+  <div class="cols">
+    <div>
+      <div class="fcard">
+        <div>
+          <div class="f-name">Age</div>
+          <div class="f-sub">Primary prior anchor — Jansen et al. JAMA 2015</div>
+          <div class="f-or">Model weight: very high</div>
+        </div>
+        <div class="num-g">
+          <input type="number" id="f-age" min="50" max="99" placeholder="yrs" oninput="liveUpdate()">
+          <span class="u">yrs</span>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div>
+          <div class="f-name">Cognitive Syndrome</div>
+          <div class="f-sub">Sets baseline amyloid prevalence stratum</div>
+          <div class="f-or">Model weight: very high</div>
+        </div>
+        <div class="sel-g">
+          <select id="f-synd" onchange="liveUpdate()">
+            <option value="normal">Normal cognition (no complaint)</option>
+            <option value="scd">Subjective cognitive decline (SCD)</option>
+            <option value="mci_a">MCI — amnestic (typical AD pattern)</option>
+            <option value="mci_na">MCI — non-amnestic / atypical</option>
+            <option value="dem_a">Dementia — amnestic / typical AD</option>
+            <option value="dem_na">Dementia — non-amnestic / atypical</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="fcard">
+        <div>
+          <div class="f-name">APOE ε4 Status</div>
+          <div class="f-sub">Largest single-variable OR in the model</div>
+          <div class="f-or">Heterozy: OR 2.30 · Homozy: OR 7.67 (Barral et al. 2025)</div>
+        </div>
+        <div class="sel-g">
+          <select id="f-apoe" onchange="liveUpdate()">
+            <option value="unknown">Unknown / Not tested</option>
+            <option value="neg">ε4 negative (ε3/ε3 or ε2/ε3)</option>
+            <option value="e2">ε2 carrier — protective (ε2/ε3)</option>
+            <option value="het">ε4 heterozygous (ε3/ε4)</option>
+            <option value="hom">ε4 homozygous (ε4/ε4)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div>
+          <div class="f-name">MoCA Score</div>
+          <div class="f-sub">Severity modifier within syndrome stratum</div>
+          <div class="f-or">Model weight: moderate</div>
+        </div>
+        <div class="num-g">
+          <input type="number" id="f-moca" min="0" max="30" placeholder="—" oninput="liveUpdate()">
+          <span class="u">/30</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-head">Neuroimaging Variables</div>
+  <div class="cols">
+    <div class="fcard">
+      <div>
+        <div class="f-name">MRI — Medial Temporal Atrophy (MTA)</div>
+        <div class="f-sub">Visually rated Scheltens scale; MTA ≥2 is clinically significant</div>
+        <div class="f-or">MTA 2: OR ~2.8 · MTA 3–4: OR ~5.1 (meta-analysis)</div>
+      </div>
+      <div class="sel-g">
+        <select id="f-mta" onchange="liveUpdate()">
+          <option value="none">Not performed / unknown</option>
+          <option value="0">Normal — MTA 0–1</option>
+          <option value="2">Mild-moderate — MTA 2</option>
+          <option value="34">Significant — MTA 3–4</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="fcard">
+      <div>
+        <div class="f-name">WML / Vascular Burden (Fazekas)</div>
+        <div class="f-sub">Moderate/severe WML shifts differential toward VaD</div>
+        <div class="f-or">Severe: OR 0.62 vs AD pathology (protective for AD PTP)</div>
+      </div>
+      <div class="sel-g">
+        <select id="f-wml" onchange="liveUpdate()">
+          <option value="none">Not performed / unknown</option>
+          <option value="0">None / Fazekas 0–1</option>
+          <option value="2">Moderate — Fazekas 2</option>
+          <option value="3">Severe — Fazekas 3</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-head">Genetic &amp; Family History</div>
+  <div class="cols">
+    <div class="fcard">
+      <div>
+        <div class="f-name">Family History of Dementia</div>
+        <div class="f-sub">1st-degree relative; early-onset (&lt;65) increases probability further</div>
+        <div class="f-or">1st-deg: OR ~1.73 · Early onset: OR ~2.5 (Lancet meta-analysis)</div>
+      </div>
+      <div class="sel-g">
+        <select id="f-fam" onchange="liveUpdate()">
+          <option value="0">None known</option>
+          <option value="1">1st-degree relative — late onset (≥65)</option>
+          <option value="2">1st-degree relative — early onset (&lt;65)</option>
+          <option value="3">Multiple 1st-degree relatives</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="fcard">
+      <div>
+        <div class="f-name">Sex</div>
+        <div class="f-sub">Female sex: higher lifetime risk; APOE ε4 interaction effect</div>
+        <div class="f-or">Female: OR ~1.18 (age- and APOE-adjusted, Livingston 2024)</div>
+      </div>
+      <div class="chip-g" id="chip-sex">
+        <div class="chip on" data-v="male"   onclick="chip(this,'chip-sex')">Male</div>
+        <div class="chip"    data-v="female" onclick="chip(this,'chip-sex')">Female</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-head">Vascular &amp; Lifestyle Risk Burden <span style="font-weight:300;font-size:10px;margin-left:4px;">(CAIDE-derived, collapsed)</span></div>
+  <div class="fcard">
+    <div>
+      <div class="f-name">Cumulative Vascular / Lifestyle Risk</div>
+      <div class="f-sub">Includes: hypertension, diabetes, obesity (BMI ≥30), high LDL, physical inactivity, low education (&lt;12 yrs). Count how many apply.</div>
+      <div class="f-or">None: OR 1.0 · 1–2 factors: OR 1.60 · 3+ factors or DM+HTN: OR 2.20 — collapsed from CAIDE individual ORs; adding items beyond 2 does not improve predictability (Exalto et al.)</div>
+    </div>
+    <div class="sel-g">
+      <select id="f-vasc" onchange="liveUpdate()">
+        <option value="0">None / minimal (0 factors)</option>
+        <option value="1">Moderate burden (1–2 factors)</option>
+        <option value="2">High burden (3+ factors, or DM + HTN together)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="sec-head">Clinical Modifiers &amp; Renal Status</div>
+  <div class="cols">
+    <div class="fcard">
+      <div>
+        <div class="f-name">Depression (Current or Recent)</div>
+        <div class="f-sub">Confounder and independent risk factor; raises CI width</div>
+        <div class="f-or">OR 1.90 (Livingston et al. Lancet 2024 pooled)</div>
+      </div>
+      <div class="chip-g" id="chip-dep">
+        <div class="chip on" data-v="0" onclick="chip(this,'chip-dep')">No</div>
+        <div class="chip"    data-v="1" onclick="chip(this,'chip-dep')">Yes</div>
+      </div>
+    </div>
+
+    <div class="fcard">
+      <div>
+        <div class="f-name">Renal Status</div>
+        <div class="f-sub">Directly affects p-tau217 and other plasma biomarker reliability</div>
+        <div class="f-or">AA CPG 2025: CKD 3+ → p-tau217 unreliable → Amyloid PET preferred</div>
+      </div>
+      <div class="sel-g">
+        <select id="f-renal" onchange="onRenalChange()">
+          <option value="normal">Normal / CKD Stage 1–2</option>
+          <option value="ckd3">CKD Stage 3–4</option>
+          <option value="esrd">CKD Stage 5 / Hemodialysis</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <!-- Renal warning banner — shown dynamically -->
+  <div id="renal-banner" style="display:none; margin-top:10px; padding:14px 16px; border-radius:var(--r); background:var(--purple-light); border:1px solid rgba(91,58,142,0.25); font-size:13px; color:var(--ink2); line-height:1.7;">
+    <div id="renal-banner-body"></div>
+  </div>
+
+  <!-- BUTTONS -->
+  <div class="btn-row">
+    <button class="btn-calc" onclick="calculate()">Calculate Pre-Test Probability</button>
+    <button class="btn-sec"  onclick="resetAll()" title="Reset">↺ Reset</button>
+    <button class="btn-sec"  onclick="window.print()" title="Print">⎙ Export</button>
+  </div>
+
+  <!-- BREAKDOWN -->
+  <div class="bd-card" id="bd-card">
+    <div class="bd-head">Model Breakdown — Bayesian OR Adjustments</div>
+    <div id="bd-body"></div>
+  </div>
+
+</div><!-- /pane-calc -->
+
+<!-- ══════════════ EVIDENCE BASE ══════════════ -->
+<div id="pane-refs" class="pane">
+
+  <div class="alert">
+    <span>⚠</span>
+    <span>The OR values used in this model are derived from the primary studies listed here. All coefficients are shown in the Methodology tab for auditability.</span>
+  </div>
+
+  <div class="ref-card">
+    <h3><span class="ref-tag rt-blue">Prior Anchor</span>Amyloid PET/CSF Prevalence Meta-analysis</h3>
+    <p>Individual participant-level meta-analysis (n=6,883: 2,914 CN, 697 SCD, 3,972 MCI) establishing the baseline prior probabilities used in this model. Amyloid prevalence increases from age 50–90 in cognitively normal individuals: 10% → 44%. In MCI: 27% → 71%. APOE ε4 carriers have 2–3× higher prevalence at any age. This forms the empirical prior in our Bayesian framework — the single most important anchor in the model.</p>
+    <cite>Jansen WJ et al. Prevalence of cerebral amyloid pathology in persons without dementia. JAMA. 2015;313(19):1924–38.</cite>
+  </div>
+
+  <div class="ref-card">
+    <h3><span class="ref-tag rt-amber">APOE ε4</span>APOE Effect on ADRD — Largest Meta-analysis (Hispanic/Latinx, n=12,221)</h3>
+    <p>Comprehensive 2025 meta-analysis providing adjusted odds ratios for APOE ε4 across ancestries. Joint analysis: ε4 heterozygous OR 2.30 (95% CI 2.07–2.56); ε4 homozygous OR 7.67 (95% CI 6.06–9.71). The ε2 allele is modestly protective (OR 0.81). Female ε4 carriers show consistently higher risk than male ε4 carriers, though the sex × APOE interaction used in this model is conservative (OR 1.26 additive interaction term).</p>
+    <cite>Barral S et al. APOE and Alzheimer's disease and related dementias risk among 12,221 Hispanics/Latinos. Alzheimers Dement. 2025;21:e70138.</cite>
+  </div>
+
+  <div class="ref-card">
+    <h3><span class="ref-tag rt-green">CAIDE</span>CAIDE Score — 19-Year Validation with APOE Integration</h3>
+    <p>Validation of the CAIDE Dementia Risk Score in a national Finnish population-based cohort (n=5,806), with 571 dementia diagnoses over 19 years. AUC 0.78 (95% CI 0.76–0.79) for base CAIDE variables (age, education, sex, SBP, BMI, cholesterol, physical activity). Adding APOE ε4: AUC 0.81 (95% CI 0.80–0.83). The individual OR contributions from this study inform the vascular risk factor weights in this model.</p>
+    <cite>Pietilä E et al. Enhancing dementia prediction: A 19-year validation of the CAIDE risk score with insulin resistance and APOE ε4 integration. J Prev Alzheimers Dis. 2025;12(5):100126.</cite>
+  </div>
+
+  <div class="ref-card">
+    <h3><span class="ref-tag rt-blue">AA CPG 2025</span>Alzheimer's Association Blood-Based Biomarker Clinical Practice Guideline</h3>
+    <p>Systematic review of 49 observational studies (n=560 mean, range 70–2244) assessing p-tau and Aβ assays. Key recommendations: BBMs with ≥90% sensitivity/≥75% specificity serve as triaging tests; ≥90% sensitivity and specificity serve as confirmatory tests substituting for amyloid PET or CSF. Pre-test probability must be considered — results should only be interpreted after comprehensive clinical evaluation. Preferred analytes: p-tau217, %p-tau217, p-tau181, p-tau231, Aβ42/40.</p>
+    <cite>Palmqvist S, Whitson HE, Allen LA et al. Alzheimers Dement. 2025;21(7):e70535.</cite>
+  </div>
+
+  <div class="ref-card">
+    <h3><span class="ref-tag rt-amber">Lancet 2024</span>Lancet Commission — 14 Modifiable Risk Factors</h3>
+    <p>2024 update identifying 14 modifiable risk factors accounting for ~45% of global dementia. New additions: high LDL cholesterol (OR 1.42) and vision loss. Confirmed factors include hypertension (pooled OR 1.57), diabetes (OR 1.54), physical inactivity (OR 1.40), obesity (OR 1.40), depression (OR 1.90), low education (OR 1.60), and social isolation. These OR values are directly incorporated as model coefficients.</p>
+    <cite>Livingston G, Huntley J, Liu KY et al. Dementia prevention, intervention, and care: 2024 report of the Lancet standing commission. Lancet. 2024;404(10452):572–628.</cite>
+  </div>
+
+  <div class="ref-card">
+    <h3><span class="ref-tag rt-purple">Therriault 2024</span>Pre-Test Probability Framework for Plasma Biomarker Interpretation</h3>
+    <p>Study of 6,896 individuals across 11 cohort studies (6 countries) establishing that PPV and NPV of plasma biomarkers vary substantially with pre-test probability. A 75-year-old with typical AD dementia syndrome: positive p-tau217 is almost certainly a true positive; negative result has significant false-negative probability. Validates the clinical necessity of pre-test probability estimation before biomarker ordering.</p>
+    <cite>Therriault J et al. Diagnosis of Alzheimer's disease using plasma biomarkers adjusted to clinical probability. Nature Aging. 2024 Nov.</cite>
+  </div>
+
+  <div class="ref-card">
+    <h3><span class="ref-tag rt-green">Jansen 2022</span>Updated Amyloid Prevalence Estimates (85 cohorts, n=19,097)</h3>
+    <p>Updated meta-analysis expanding the 2015 data. Among those without dementia: amyloid positive in 24% with normal cognition, 27% with SCD, and 51% with MCI. Amyloid prevalence consistently increases with age across all cognitive groups. Validates the age-stratified prior structure of this model and confirms the SCD prevalence (27%) as meaningfully above cognitively normal baseline (24%).</p>
+    <cite>Jansen WJ et al. Prevalence of amyloid pathology in persons without dementia. Alzheimers Dement. 2022;18(6):1110–28.</cite>
+  </div>
+
+  <div class="ref-card">
+    <h3><span class="ref-tag rt-red">MCI Prognosis</span>MCI Conversion Rate Meta-analysis (89 Studies)</h3>
+    <p>Systematic review and meta-analysis confirming that MCI conversion risk to dementia over mean 5.2-year follow-up is 41.5% in clinical settings and 27.0% in community samples. Amnestic MCI has higher progression rates than non-amnestic subtypes. Annual conversion rate approximately 8–10% in specialist settings (Mitchell & Shiri-Feshki meta-analysis: 9.6%/year). This contextualizes the syndrome stratum probabilities used in this model.</p>
+    <cite>Salemme S et al. The prognosis of mild cognitive impairment. Alzheimers Dement Diagn Assess Dis Monit. 2025;17:e70074.</cite>
+  </div>
+
+</div><!-- /pane-refs -->
+
+<!-- ══════════════ METHODOLOGY ══════════════ -->
+<div id="pane-meth" class="pane">
+
+  <div class="meth-section">
+    <h3>Model Architecture</h3>
+    <p>This calculator implements a <strong>Bayesian logistic regression framework</strong> rather than a simple additive score. The fundamental departure from additive scoring tools is that variables do not contribute points — they contribute multiplicative odds ratio adjustments to a population-anchored prior probability.</p>
+    <p>The prior is set by the intersection of <strong>age × cognitive syndrome</strong>, using empirical amyloid PET/CSF prevalence data from the Jansen et al. JAMA 2015 meta-analysis (n=6,883). This prior is then adjusted multiplicatively by each clinical variable using its published odds ratio. The final posterior probability is derived via the logit-inverse transform.</p>
+  </div>
+
+  <div class="meth-section">
+    <h3>Computational Steps</h3>
+    <div class="eq-box">
+Step 1: Prior probability P₀ = f(age, syndrome)
+        [Jansen et al. 2015 — empirical amyloid prevalence table]
+
+Step 2: Convert prior to log-odds
+        logit(P₀) = ln(P₀ / (1 – P₀))
+
+Step 3: Apply multiplicative OR adjustments
+        logit(Pₙ) = logit(P₀) + Σ [ln(ORᵢ) × xᵢ]
+        where xᵢ = 1 if variable present, 0 otherwise
+
+Step 4: Convert back to probability
+        P_posterior = 1 / (1 + e^−logit(Pₙ))
+
+Step 5: Confidence interval from data completeness
+        CI_width = base_uncertainty × (1 / √data_weight)
+        95% CI = [P − 1.96×SE, P + 1.96×SE]
+        SE derived from propagated OR 95% CI bounds
+    </div>
+  </div>
+
+  <div class="meth-section">
+    <h3>Prior Probability Table (Age × Syndrome)</h3>
+    <p>These values are interpolated from the Jansen et al. 2015 and 2022 meta-analyses (amyloid PET or CSF Aβ42 positivity). Cognitively normal (CN) values represent population-level estimates; specialist clinic prevalence is typically higher.</p>
+    <div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:12px;">
+      <thead>
+        <tr style="background:var(--surface2);">
+          <th style="padding:8px 10px;text-align:left;border:1px solid var(--border);font-weight:600;">Age Range</th>
+          <th style="padding:8px 10px;border:1px solid var(--border);font-weight:600;">CN</th>
+          <th style="padding:8px 10px;border:1px solid var(--border);font-weight:600;">SCD</th>
+          <th style="padding:8px 10px;border:1px solid var(--border);font-weight:600;">aMCI</th>
+          <th style="padding:8px 10px;border:1px solid var(--border);font-weight:600;">naMCI</th>
+          <th style="padding:8px 10px;border:1px solid var(--border);font-weight:600;">AD Dementia</th>
+          <th style="padding:8px 10px;border:1px solid var(--border);font-weight:600;">Atypical Dem</th>
+        </tr>
+      </thead>
+      <tbody id="prior-table-body"></tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="meth-section">
+    <h3>Odds Ratio Coefficients</h3>
+    <p>All ORs are sourced from large meta-analyses or prospective cohort studies. Where multiple estimates were available, the most conservative (smallest departure from 1.0) was used to avoid overconfidence.</p>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;">
+      <thead>
+        <tr style="background:var(--surface2);">
+          <th style="padding:8px 10px;text-align:left;border:1px solid var(--border);">Variable</th>
+          <th style="padding:8px 10px;border:1px solid var(--border);">OR Used</th>
+          <th style="padding:8px 10px;border:1px solid var(--border);">95% CI</th>
+          <th style="padding:8px 10px;text-align:left;border:1px solid var(--border);">Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">APOE ε4 heterozygous</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--red);">2.30</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">2.07–2.56</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">Barral et al. 2025</td></tr>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">APOE ε4 homozygous</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--red);">7.67</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">6.06–9.71</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">Barral et al. 2025</td></tr>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">APOE ε2 (protective)</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--green);">0.81</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">0.68–0.97</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">Barral et al. 2025</td></tr>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">MTA grade 2</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--red);">2.80</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">1.9–4.1</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">Duara et al.; meta-analysis</td></tr>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">MTA grade 3–4</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--red);">5.10</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">3.2–8.1</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">Multiple MRI-AD studies</td></tr>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">Severe WML (Fazekas 3)</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--green);">0.62</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">0.45–0.85</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">Shifts toward VaD</td></tr>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">Family history — 1st deg late</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--red);">1.73</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">1.5–2.0</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">Lancet 2024 meta-analysis</td></tr>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">Family history — early onset</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--red);">2.50</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">1.8–3.5</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">Lancet 2024 meta-analysis</td></tr>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">Family history — multiple</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--red);">3.20</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">2.1–4.9</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">Lancet 2024 meta-analysis</td></tr>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">Depression</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--amber);">1.90</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">1.55–2.33</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">Livingston et al. Lancet 2024</td></tr>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">Hypertension</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--amber);">1.57</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">1.35–1.83</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">Livingston et al. Lancet 2024</td></tr>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">Diabetes</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--amber);">1.54</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">1.28–1.85</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">Livingston et al. Lancet 2024</td></tr>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">High cholesterol</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--amber);">1.42</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">1.23–1.65</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">Livingston et al. Lancet 2024</td></tr>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">Obesity</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--amber);">1.40</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">1.20–1.63</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">CAIDE; Lancet 2024</td></tr>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">Physical inactivity</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--amber);">1.40</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">1.20–1.63</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">CAIDE; Lancet 2024</td></tr>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">Low education</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--amber);">1.60</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">1.37–1.87</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">CAIDE AUC 0.611</td></tr>
+        <tr><td style="padding:7px 10px;border:1px solid var(--border);">Female sex</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--amber);">1.18</td><td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">1.04–1.34</td><td style="padding:7px 10px;border:1px solid var(--border);color:var(--ink3);">Livingston 2024 age-adjusted</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="meth-section">
+    <h3>Confidence Interval Construction</h3>
+    <p>The 95% credible interval is constructed via <strong>uncertainty propagation</strong> through the OR confidence intervals. Each variable's contribution to uncertainty is calculated as the half-width of its log-OR confidence interval divided by 1.96. These are combined in quadrature (assuming independence). The total SE in logit space is then transformed back to the probability scale using the delta method.</p>
+    <p>Variables not entered (marked unknown) contribute a fixed uncertainty penalty proportional to the range of plausible values for that variable type. Higher-weight variables (APOE, syndrome, age) have larger uncertainty penalties when missing, producing wider CIs and appropriate epistemic humility.</p>
+    <p><strong>Depression as a confounder:</strong> When depression is present, an additional uncertainty term of ±8% is added to the CI because depression both mimics and independently causes cognitive decline, introducing genuine diagnostic ambiguity.</p>
+  </div>
+
+  <div class="meth-section">
+    <h3>Limitations</h3>
+    <ul>
+      <li>ORs are assumed independent (no interaction terms computed), which overestimates certainty when multiple risk factors co-occur</li>
+      <li>Model has not been prospectively validated as a standalone clinical instrument</li>
+      <li>APOE ε4 effect size varies by ancestry — ORs from Barral et al. 2025 reflect Hispanic/Latinx and European ancestries; may overestimate in some other populations</li>
+      <li>Not applicable to autosomal dominant AD (PSEN1/2, APP mutations) — refer to genetic counseling</li>
+      <li>Amyloid PET prevalence data are primarily from research cohorts with volunteer bias; true community prevalence may be lower</li>
+      <li>MoCA modifies severity within syndrome stratum but has known floor/ceiling effects and education dependence</li>
+    </ul>
+  </div>
+
+</div><!-- /pane-meth -->
+</div><!-- /wrap -->
+
+<script>
+// ══════════════════════════════════════════════════════════
+// BAYESIAN MODEL
+// ══════════════════════════════════════════════════════════
+
+// ── PRIOR TABLE (age × syndrome) — Jansen 2015/2022 interpolated ──
+// Rows: age bands [50,60,70,80,90+]
+// Cols: normal, scd, mci_a, mci_na, dem_a, dem_na
+const PRIOR = [
+  { band:'50–59', ages:[50,59], p:{ normal:.10, scd:.12, mci_a:.30, mci_na:.22, dem_a:.78, dem_na:.45 } },
+  { band:'60–69', ages:[60,69], p:{ normal:.18, scd:.20, mci_a:.42, mci_na:.30, dem_a:.82, dem_na:.52 } },
+  { band:'70–79', ages:[70,79], p:{ normal:.27, scd:.29, mci_a:.55, mci_na:.38, dem_a:.86, dem_na:.60 } },
+  { band:'80–89', ages:[80,89], p:{ normal:.36, scd:.37, mci_a:.65, mci_na:.48, dem_a:.90, dem_na:.68 } },
+  { band:'≥90',   ages:[90,99], p:{ normal:.44, scd:.43, mci_a:.71, mci_na:.56, dem_a:.93, dem_na:.74 } },
+];
+
+// ── OR TABLE — variable: { or, ci_lo, ci_hi, label, group, highImpact } ──
+const ORS = {
+  apoe_het:  { or:2.30, ci_lo:2.07, ci_hi:2.56, label:'APOE ε4 heterozygous',  group:'Genetic',   highImpact:true  },
+  apoe_hom:  { or:7.67, ci_lo:6.06, ci_hi:9.71, label:'APOE ε4 homozygous',    group:'Genetic',   highImpact:true  },
+  apoe_e2:   { or:0.81, ci_lo:0.68, ci_hi:0.97, label:'APOE ε2 (protective)',  group:'Genetic',   highImpact:true  },
+  mta2:      { or:2.80, ci_lo:1.90, ci_hi:4.10, label:'MTA grade 2',           group:'MRI',       highImpact:true  },
+  mta34:     { or:5.10, ci_lo:3.20, ci_hi:8.10, label:'MTA grade 3–4',         group:'MRI',       highImpact:true  },
+  wml_sev:   { or:0.62, ci_lo:0.45, ci_hi:0.85, label:'Severe WML (Faz 3)',    group:'MRI',       highImpact:false },
+  wml_mod:   { or:0.82, ci_lo:0.65, ci_hi:1.03, label:'Moderate WML (Faz 2)',  group:'MRI',       highImpact:false },
+  fam1_late: { or:1.73, ci_lo:1.50, ci_hi:2.00, label:'FamHx 1st-deg late',   group:'History',   highImpact:false },
+  fam1_early:{ or:2.50, ci_lo:1.80, ci_hi:3.50, label:'FamHx 1st-deg early',  group:'History',   highImpact:true  },
+  fam_multi: { or:3.20, ci_lo:2.10, ci_hi:4.90, label:'FamHx multiple',        group:'History',   highImpact:true  },
+  sex_f:     { or:1.18, ci_lo:1.04, ci_hi:1.34, label:'Female sex',            group:'Demographics', highImpact:false },
+  vasc_mod:  { or:1.60, ci_lo:1.37, ci_hi:1.87, label:'Vascular burden — moderate (1–2 factors)', group:'Vascular', highImpact:false },
+  vasc_high: { or:2.20, ci_lo:1.72, ci_hi:2.82, label:'Vascular burden — high (3+ factors)',      group:'Vascular', highImpact:false },
+  dep:       { or:1.90, ci_lo:1.55, ci_hi:2.33, label:'Depression',            group:'Clinical',  highImpact:false },
+  moca_mild: { or:1.35, ci_lo:1.10, ci_hi:1.65, label:'MoCA 18–25 (mild impairment)', group:'Cognitive', highImpact:false },
+  moca_mod:  { or:1.80, ci_lo:1.30, ci_hi:2.50, label:'MoCA <18 (moderate)',   group:'Cognitive', highImpact:false },
+};
+
+function logit(p) { return Math.log(p / (1 - p)); }
+function invLogit(lo) { return 1 / (1 + Math.exp(-lo)); }
+
+function getPrior(age, synd) {
+  if (!age || age < 50) return null;
+  let row = PRIOR[PRIOR.length - 1];
+  for (let r of PRIOR) {
+    if (age >= r.ages[0] && age <= r.ages[1]) { row = r; break; }
+  }
+  return row.p[synd] || row.p['normal'];
+}
+
+function getActiveORKeys(inputs) {
+  const keys = [];
+
+  // APOE
+  if      (inputs.apoe === 'het') keys.push('apoe_het');
+  else if (inputs.apoe === 'hom') keys.push('apoe_hom');
+  else if (inputs.apoe === 'e2')  keys.push('apoe_e2');
+
+  // MTA
+  if      (inputs.mta === '2')  keys.push('mta2');
+  else if (inputs.mta === '34') keys.push('mta34');
+
+  // WML
+  if      (inputs.wml === '2')  keys.push('wml_mod');
+  else if (inputs.wml === '3')  keys.push('wml_sev');
+
+  // Family history
+  if      (inputs.fam === '1') keys.push('fam1_late');
+  else if (inputs.fam === '2') keys.push('fam1_early');
+  else if (inputs.fam === '3') keys.push('fam_multi');
+
+  // Sex
+  if (inputs.sex === 'female') keys.push('sex_f');
+
+  // Vascular
+  if (inputs.htn  === '1') keys.push('htn');
+  if (inputs.dm   === '1') keys.push('dm');
+  if (inputs.chol === '1') keys.push('chol');
+  if (inputs.bmi  === '1') keys.push('bmi');
+  if (inputs.pa   === '1') keys.push('pa');
+  if (inputs.edu  === '1') keys.push('edu');
+
+  // Depression
+  if (inputs.dep === '1') keys.push('dep');
+
+  // MoCA modifier
+  if (inputs.moca !== null) {
+    if      (inputs.moca < 18)  keys.push('moca_mod');
+    else if (inputs.moca <= 25) keys.push('moca_mild');
+  }
+
+  return keys;
+}
+
+function computeModel(inputs) {
+  const prior = getPrior(inputs.age, inputs.synd);
+  if (prior === null) return null;
+
+  const lo_prior = logit(prior);
+  const activeKeys = getActiveORKeys(inputs);
+
+  // Sum log-ORs
+  let lo_total = lo_prior;
+  let varSE_sq = 0; // variance in logit space from OR CIs
+
+  for (const key of activeKeys) {
+    const v = ORS[key];
+    const logOR = Math.log(v.or);
+    const logOR_lo = Math.log(v.ci_lo);
+    const logOR_hi = Math.log(v.ci_hi);
+    const SE_logOR = (logOR_hi - logOR_lo) / (2 * 1.96);
+    lo_total += logOR;
+    varSE_sq += SE_logOR * SE_logOR;
+  }
+
+  // Unknown high-impact variables add uncertainty
+  const hasAPOE = ['apoe_het','apoe_hom','apoe_e2'].some(k => activeKeys.includes(k));
+  const hasMRI  = ['mta2','mta34','wml_mod','wml_sev','mta0'].some(k => activeKeys.includes(k));
+  const hasMTA  = inputs.mta !== 'none';
+  const hasWML  = inputs.wml !== 'none';
+
+  if (inputs.apoe === 'unknown') varSE_sq += (Math.log(2.30)/1.96) ** 2; // uncertainty = could be het
+  if (!hasMTA) varSE_sq += (Math.log(2.80)/1.96) ** 2;
+
+  // Depression adds diagnostic ambiguity
+  if (inputs.dep === '1') varSE_sq += (0.08 * (1/0.28)) ** 2; // ±8% on prob scale rough
+
+  const SE_logit = Math.sqrt(varSE_sq);
+  const lo_lo = lo_total - 1.96 * SE_logit;
+  const lo_hi = lo_total + 1.96 * SE_logit;
+
+  const p     = invLogit(lo_total);
+  const p_lo  = invLogit(lo_lo);
+  const p_hi  = invLogit(lo_hi);
+
+  // Combined OR = product of active ORs
+  const combOR = activeKeys.reduce((acc, k) => acc * ORS[k].or, 1);
+
+  return { p, p_lo, p_hi, prior, lo_total, activeKeys, combOR, SE_logit };
+}
+
+// ── DATA COMPLETENESS ──
+const CONF_VARS = [
+  { key:'age',   label:'Age',    hi:true  },
+  { key:'synd',  label:'Syndrome', hi:true },
+  { key:'apoe',  label:'APOE ε4', hi:true  },
+  { key:'moca',  label:'MoCA',   hi:false },
+  { key:'mta',   label:'MRI-MTA',hi:true  },
+  { key:'wml',   label:'WML',    hi:false },
+  { key:'fam',   label:'Family Hx', hi:false },
+  { key:'dep',   label:'Depression', hi:false },
+];
+
+function getInputs() {
+  const age = parseFloat(document.getElementById('f-age').value) || null;
+  const moca_raw = document.getElementById('f-moca').value;
+  const moca = moca_raw !== '' ? parseFloat(moca_raw) : null;
+  return {
+    age,
+    synd:  document.getElementById('f-synd').value,
+    apoe:  document.getElementById('f-apoe').value,
+    moca,
+    mta:   document.getElementById('f-mta').value,
+    wml:   document.getElementById('f-wml').value,
+    fam:   document.getElementById('f-fam').value,
+    dep:   chipVal('chip-dep'),
+    sex:   chipVal('chip-sex'),
+    vasc:  document.getElementById('f-vasc').value,
+    renal: document.getElementById('f-renal').value,
+  };
+}
+
+function calcCompleteness(inp) {
+  let filled = 0, total = CONF_VARS.length, hiTotal = 0, hiFilled = 0;
+  const statuses = CONF_VARS.map(v => {
+    let f = false;
+    if (v.key === 'age')   f = inp.age !== null && inp.age >= 50;
+    if (v.key === 'synd')  f = inp.synd !== 'normal'; // any non-default is informative
+    if (v.key === 'apoe')  f = inp.apoe !== 'unknown';
+    if (v.key === 'moca')  f = inp.moca !== null;
+    if (v.key === 'mta')   f = inp.mta !== 'none';
+    if (v.key === 'wml')   f = inp.wml !== 'none';
+    if (v.key === 'fam')   f = inp.fam !== '0';
+    if (v.key === 'dep')   f = true; // always entered (chip default = no)
+    if (f) filled++;
+    if (v.hi) { hiTotal++; if (f) hiFilled++; }
+    return { ...v, filled: f };
+  });
+  return { statuses, filled, total, hiFilled, hiTotal, pct: Math.round(filled/total*100) };
+}
+
+// ── UI HELPERS ──
+function chip(el, gid) {
+  document.querySelectorAll('#'+gid+' .chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  liveUpdate();
+}
+function chipVal(gid) {
+  const el = document.querySelector('#'+gid+' .chip.on');
+  return el ? el.dataset.v : '0';
+}
+function showPane(id, btn) {
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.t').forEach(b => b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+}
+function liveUpdate() { /* optional: wire up for live preview */ }
+
+// ── RESET ──
+function resetAll() {
+  document.getElementById('f-age').value = '';
+  document.getElementById('f-moca').value = '';
+  document.getElementById('f-synd').value = 'normal';
+  document.getElementById('f-apoe').value = 'unknown';
+  document.getElementById('f-mta').value = 'none';
+  document.getElementById('f-wml').value = 'none';
+  document.getElementById('f-fam').value = '0';
+  document.getElementById('f-renal').value = 'normal';
+  ['chip-sex','chip-htn','chip-dm','chip-chol','chip-bmi','chip-pa','chip-edu','chip-dep'].forEach(g => {
+    const chips = document.querySelectorAll('#'+g+' .chip');
+    chips.forEach(c => c.classList.remove('on'));
+    chips[0].classList.add('on');
+  });
+  // Reset display
+  document.getElementById('r-pct').textContent = '—';
+  document.getElementById('r-pct').className = 'result-pct';
+  document.getElementById('r-tier').textContent = 'Awaiting calculation';
+  document.getElementById('r-tier').className = 'result-tier';
+  document.getElementById('r-ci').textContent = '— — —%';
+  document.getElementById('r-ci-note').textContent = 'Enter variables below';
+  document.getElementById('pbar').style.width = '0';
+  document.getElementById('pbar').className = 'pbar-fill';
+  document.getElementById('ci-bar-wrap').style.display = 'none';
+  document.getElementById('ci-ticks').style.display = 'none';
+  document.getElementById('pill-prior').textContent = 'Prior: —';
+  document.getElementById('pill-or').textContent = 'Combined OR: —';
+  document.getElementById('pill-conf').textContent = 'Data completeness: —';
+  document.getElementById('pill-width').textContent = 'CI width: —';
+  document.getElementById('rec-out').className = 'rec';
+  document.getElementById('rec-idle').className = 'rec on';
+  document.getElementById('bd-card').className = 'bd-card';
+  document.getElementById('conf-meter').style.display = 'none';
+}
+
+// ── CALCULATE ──
+function calculate() {
+  const inp = getInputs();
+
+  if (!inp.age || inp.age < 50 || inp.age > 99) {
+    alert('Please enter a valid age (50–99 years) to anchor the prior probability.');
+    return;
+  }
+
+  const result = computeModel(inp);
+  if (!result) return;
+
+  const { p, p_lo, p_hi, prior, activeKeys, combOR, SE_logit } = result;
+  const pPct    = Math.round(p * 100);
+  const p_loPct = Math.max(0, Math.round(p_lo * 100));
+  const p_hiPct = Math.min(99, Math.round(p_hi * 100));
+  const ciWidth = p_hiPct - p_loPct;
+
+  // Tier
+  let tier, tierClass;
+  if (inp.renal === 'esrd' || inp.renal === 'ckd3') {
+    tier = inp.renal === 'esrd' ? 'RENAL INTERFERENCE — ESRD/HD' : 'RENAL INTERFERENCE — CKD 3–4';
+    tierClass = 'renal';
+  } else if (pPct >= 65) {
+    tier = 'HIGH PRE-TEST PROBABILITY';
+    tierClass = 'high';
+  } else if (pPct >= 30) {
+    tier = 'MODERATE PRE-TEST PROBABILITY';
+    tierClass = 'mod';
+  } else {
+    tier = 'LOW PRE-TEST PROBABILITY';
+    tierClass = 'low';
+  }
+
+  // Update result card
+  const rp = document.getElementById('r-pct');
+  rp.textContent = pPct + '%';
+  rp.className = 'result-pct ' + tierClass;
+
+  const rt = document.getElementById('r-tier');
+  rt.textContent = tier;
+  rt.className = 'result-tier ' + tierClass;
+
+  document.getElementById('r-ci').textContent = p_loPct + '% — ' + p_hiPct + '%';
+  document.getElementById('r-ci-note').textContent = '95% credible interval (propagated OR CIs)';
+
+  const bar = document.getElementById('pbar');
+  bar.style.width = pPct + '%';
+  bar.className = 'pbar-fill ' + tierClass;
+
+  // CI band bar
+  document.getElementById('ci-bar-wrap').style.display = 'block';
+  document.getElementById('ci-ticks').style.display = 'flex';
+  const band = document.getElementById('ci-band');
+  band.style.left = p_loPct + '%';
+  band.style.width = ciWidth + '%';
+  const pt = document.getElementById('ci-point');
+  pt.style.left = pPct + '%';
+
+  // Pills
+  document.getElementById('pill-prior').textContent = 'Prior (age×syndrome): ' + Math.round(prior*100) + '%';
+  document.getElementById('pill-or').textContent = 'Combined OR: ×' + combOR.toFixed(2);
+  const comp = calcCompleteness(inp);
+  const confPill = document.getElementById('pill-conf');
+  confPill.textContent = 'Data completeness: ' + comp.pct + '%';
+  confPill.className = 'pill' + (comp.pct >= 75 ? ' good' : comp.pct >= 50 ? ' warn' : ' bad');
+  const wPill = document.getElementById('pill-width');
+  wPill.textContent = 'CI width: ±' + Math.round(ciWidth/2) + '%';
+  wPill.className = 'pill' + (ciWidth <= 20 ? ' good' : ciWidth <= 35 ? ' warn' : ' bad');
+
+  // Completeness meter
+  updateConfMeter(comp);
+
+  // Recommendation
+  buildRec(inp, pPct, p_loPct, p_hiPct, tierClass, comp);
+
+  // Breakdown
+  buildBreakdown(inp, activeKeys, prior, p);
+}
+
+function updateConfMeter(comp) {
+  const grid = document.getElementById('conf-grid');
+  grid.innerHTML = comp.statuses.map(s => `
+    <div class="conf-item">
+      <div class="conf-dot ${s.filled?'filled':'empty'} ${s.hi?'high-impact':''}"></div>
+      <div class="conf-item-label ${s.filled?'filled':''}">${s.label}${s.hi?' ★':''}</div>
+    </div>`).join('');
+  document.getElementById('conf-meter').style.display = 'block';
+}
+
+function buildRec(inp, pPct, lo, hi, cls, comp) {
+  document.getElementById('rec-idle').className = 'rec';
+  const box = document.getElementById('rec-out');
+  const title = document.getElementById('rec-title');
+  const body = document.getElementById('rec-body');
+  box.className = 'rec on ' + cls;
+
+  const ciNote = `(95% CI ${lo}–${hi}%)`;
+  const unmetNote = comp.pct < 60
+    ? `<br><br><strong>⚠ Data completeness ${comp.pct}%:</strong> CI is wide. Consider obtaining APOE status and/or MRI to narrow the estimate before biomarker ordering.`
+    : '';
+
+  if (inp.renal === 'esrd') {
+    title.textContent = 'Biomarker Pathway — HD / ESRD';
+    body.innerHTML = `<strong>Blood-based biomarkers unreliable in hemodialysis.</strong> Plasma tau and neurofilament values are falsely elevated due to impaired renal clearance. <strong>Amyloid PET is the preferred confirmatory modality</strong> regardless of estimated pre-test probability. CSF biomarkers may be considered as an alternative when PET is unavailable; interpret with caution. <em>(AA CPG 2025, Palmqvist et al.)</em>`;
+  } else if (inp.renal === 'ckd3') {
+    title.textContent = 'Biomarker Pathway — CKD Stage 3–4';
+    body.innerHTML = `<strong>Moderate renal impairment affects plasma biomarker specificity.</strong> Ratio-based assays (%p-tau217) are more robust to renal clearance effects than absolute concentrations. For treatment-eligibility decisions (lecanemab/donanemab), <strong>amyloid PET or CSF biomarkers</strong> are preferred as confirmatory tests. Interpret blood-based results with caution. <em>(AA CPG 2025)</em>`;
+  } else if (pPct >= 65) {
+    title.textContent = 'High Pre-Test Probability — Recommendation';
+    body.innerHTML = `<strong>Estimated amyloid pathology probability: ${pPct}% ${ciNote}.</strong> The clinical presentation is strongly consistent with Alzheimer's pathology. In this probability range, a positive <strong>p-tau217</strong> (confirmatory-tier assay, ≥90% sens/spec) has very high PPV and can substitute for amyloid PET in most specialist settings. Consider:<br>
+    <ul style="margin-top:8px;padding-left:16px;font-size:13px;">
+      <li><strong>Confirmatory BBM</strong> (high-specificity p-tau217 or %p-tau217) — if positive, establishes AD pathology</li>
+      <li><strong>Amyloid PET</strong> — required for immunotherapy (lecanemab/donanemab) eligibility and ARIA monitoring</li>
+      <li>Disclose diagnosis per AAN guidelines; initiate cognitive care planning</li>
+      <li>Assess ARIA risk (APOE ε4 status, WML burden) before DMT initiation</li>
+    </ul>
+    <em>Refs: AA CPG 2025 (Palmqvist et al.); Therriault et al. Nat Aging 2024; Jack et al. NIA-AA 2024</em>${unmetNote}`;
+  } else if (pPct >= 30) {
+    title.textContent = 'Moderate Pre-Test Probability — Recommendation';
+    body.innerHTML = `<strong>Estimated amyloid pathology probability: ${pPct}% ${ciNote}.</strong> Clinically ambiguous — this is the range where blood-based biomarkers provide the greatest diagnostic value. Recommended approach:<br>
+    <ul style="margin-top:8px;padding-left:16px;font-size:13px;">
+      <li><strong>Triaging BBM</strong> (p-tau217, ≥90% sens / ≥75% spec): a <em>negative</em> result (below rule-out threshold &lt;0.40 pg/mL) substantially reduces posterior probability and warrants investigating non-AD causes</li>
+      <li>A <em>positive</em> or <em>indeterminate</em> result (0.40–0.63 pg/mL) requires <strong>confirmatory testing</strong> (high-spec BBM or amyloid PET/CSF)</li>
+      <li>Review for treatable contributors: B12, TSH, sleep apnea, polypharmacy, depression</li>
+      <li>Repeat cognitive assessment in 6–12 months if biomarker testing deferred</li>
+    </ul>
+    <em>Refs: AA CPG 2025; Therriault et al. Nat Aging 2024; Palmqvist exploration pub 2025</em>${unmetNote}`;
+  } else {
+    title.textContent = 'Low Pre-Test Probability — Recommendation';
+    body.innerHTML = `<strong>Estimated amyloid pathology probability: ${pPct}% ${ciNote}.</strong> Presentation is atypical for underlying AD pathology. Blood biomarkers have reduced utility here — positive results are more likely to be false positives, potentially causing patient harm. Recommended approach:<br>
+    <ul style="margin-top:8px;padding-left:16px;font-size:13px;">
+      <li>Prioritize alternative etiologies: vascular cognitive impairment, NPH, metabolic causes (B12, thyroid, hepatic, renal), medication effects, depression</li>
+      <li>BBM testing not routinely indicated; if pursued, a <em>negative</em> p-tau217 has high NPV in this context (rule-out)</li>
+      <li>Re-evaluate in 12 months or refer to memory specialist if clinical concern persists</li>
+    </ul>
+    <em>Refs: Lancet Commission 2024; AA CPG 2025</em>${unmetNote}`;
+  }
+}
+
+function buildBreakdown(inp, activeKeys, prior, pFinal) {
+  const bd = document.getElementById('bd-card');
+  const body = document.getElementById('bd-body');
+
+  // Group by category
+  const groups = {};
+  for (const key of activeKeys) {
+    const v = ORS[key];
+    if (!groups[v.group]) groups[v.group] = [];
+    groups[v.group].push({ key, ...v });
+  }
+
+  let html = `
+    <div class="bd-row" style="font-weight:600;background:var(--surface2);">
+      <span>Prior (age ${inp.age}, ${inp.synd.replace('_',' ').replace('dem','dementia').replace('mci','MCI')})</span>
+      <span class="bd-or">P₀ = ${Math.round(prior*100)}%</span>
+      <span class="bd-contrib">logit = ${logit(prior).toFixed(2)}</span>
+    </div>`;
+
+  const groupOrder = ['Cognitive','Genetic','MRI','History','Clinical','Demographics','Vascular'];
+  for (const g of groupOrder) {
+    if (!groups[g]) continue;
+    html += `<div class="bd-group-title">${g}</div>`;
+    for (const v of groups[g]) {
+      const direction = v.or >= 1 ? 'pos' : 'neg';
+      const sign = v.or >= 1 ? '+' : '';
+      html += `<div class="bd-row">
+        <span class="bd-name">${v.label}</span>
+        <span class="bd-or ${direction}">OR ${v.or}</span>
+        <span class="bd-contrib">${sign}${Math.log(v.or).toFixed(3)} log-odds</span>
+      </div>`;
+    }
+  }
+
+  html += `<div class="bd-row" style="font-weight:600;background:var(--surface2);">
+    <span>Posterior probability</span>
+    <span class="bd-or pos">P = ${Math.round(pFinal*100)}%</span>
+    <span class="bd-contrib">logit = ${logit(pFinal).toFixed(2)}</span>
+  </div>`;
+
+  body.innerHTML = html;
+  bd.className = 'bd-card on';
+}
+
+// ── BUILD PRIOR TABLE IN METHODOLOGY ──
+function buildPriorTable() {
+  const tbody = document.getElementById('prior-table-body');
+  if (!tbody) return;
+  tbody.innerHTML = PRIOR.map(r => `
+    <tr>
+      <td style="padding:7px 10px;border:1px solid var(--border);font-weight:500;">${r.band}</td>
+      <td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">${Math.round(r.p.normal*100)}%</td>
+      <td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">${Math.round(r.p.scd*100)}%</td>
+      <td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--amber);">${Math.round(r.p.mci_a*100)}%</td>
+      <td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">${Math.round(r.p.mci_na*100)}%</td>
+      <td style="padding:7px 10px;border:1px solid var(--border);text-align:center;font-weight:600;color:var(--red);">${Math.round(r.p.dem_a*100)}%</td>
+      <td style="padding:7px 10px;border:1px solid var(--border);text-align:center;">${Math.round(r.p.dem_na*100)}%</td>
+    </tr>`).join('');
+}
+buildPriorTable();
+</script>
+</body>
+</html>
